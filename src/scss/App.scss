@@ -1,0 +1,27 @@
+@import "./reset";
+@import "./bathroom";
+
+$primary-font: 'Jost', sans-serif;
+
+.container {
+    width: 1024px;
+    margin: 0 auto;
+    font-family: $primary-font;
+    box-sizing: border-box;
+}
+
+.form_top {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem 0 9rem 0;
+    font-weight: 500;
+    font-size: 1.6rem;
+
+    .btn_form_top {
+        background-color: white;
+        border: none;
+        font-weight: 500;
+        font-size: 1.5rem;
+        font-family: $primary-font;
+    }
+}
