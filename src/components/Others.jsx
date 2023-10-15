@@ -60,6 +60,8 @@ export default function Other() {
                             htmlFor="customCheckbox28"></label><span></span></div>
                     </div>
                 </div>
+            </div>
+            <div className="form_row">
                 <div className="form_option_list">
                     <div className="form_headers">
                         <div>TV</div>
@@ -76,27 +78,29 @@ export default function Other() {
                             htmlFor="customCheckbox30"></label><span></span></div>
                     </div>
                 </div>
-                <div className="form_option_list">
-                    <div className="form_headers">
-                        <div>LOKALIZACJA TV</div>
-                        <div>WYBÓR</div>
+
+                    <div className="form_option_list">
+                        <div className="form_headers">
+                            <div>LOKALIZACJA TV</div>
+                            <div>WYBÓR</div>
+                        </div>
+                        <div className="row">
+                            <div className="form_option">salon</div>
+                            <div className="form_checkbox"><input type="checkbox" id="customCheckbox31"/><label
+                                htmlFor="customCheckbox31"></label><span></span></div>
+                        </div>
+                        <div className="row">
+                            <div className="form_option">sypialnia</div>
+                            <div className="form_checkbox"><input type="checkbox" id="customCheckbox32"/><label
+                                htmlFor="customCheckbox32"></label><span></span></div>
+                        </div>
+                        <div className="row">
+                            <div className="form_option">kuchnia</div>
+                            <div className="form_checkbox"><input type="checkbox" id="customCheckbox33"/><label
+                                htmlFor="customCheckbox33"></label><span></span></div>
+                        </div>
                     </div>
-                    <div className="row">
-                        <div className="form_option">salon</div>
-                        <div className="form_checkbox"><input type="checkbox" id="customCheckbox31"/><label
-                            htmlFor="customCheckbox31"></label><span></span></div>
-                    </div>
-                    <div className="row">
-                        <div className="form_option">sypialnia</div>
-                        <div className="form_checkbox"><input type="checkbox" id="customCheckbox32"/><label
-                            htmlFor="customCheckbox32"></label><span></span></div>
-                    </div>
-                    <div className="row">
-                        <div className="form_option">kuchnia</div>
-                        <div className="form_checkbox"><input type="checkbox" id="customCheckbox33"/><label
-                            htmlFor="customCheckbox33"></label><span></span></div>
-                    </div>
-                </div>
+
             </div>
         </>
     )
