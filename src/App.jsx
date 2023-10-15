@@ -1,7 +1,4 @@
-import { useState, useEffect } from 'react'
-
-
-import Questionnaire from "./Questionnaire.jsx";
+import Questionnaire from "./components/Questionnaire.jsx";
 import './scss/App.scss'
 
 function App() {

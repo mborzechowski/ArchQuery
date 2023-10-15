@@ -1,4 +1,4 @@
-import "../scss/bathroom.scss";
+import "../scss/questionnaire.scss";
 
 export default function Bathroom() {
 
@@ -29,7 +29,7 @@ export default function Bathroom() {
 
                 <div className="row">
                     <div className="form_option">bidetta</div>
-                    <div className="form_checkbox"><input type="checkbox" id="customCheckbox3"/><label for="customCheckbox3"></label><span></span></div>
+                    <div className="form_checkbox"><input type="checkbox" id="customCheckbox3"/><label htmlFor="customCheckbox3"></label><span></span></div>
                 </div>
 
                 <div className="row">
