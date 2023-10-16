@@ -16,6 +16,7 @@ export default function Bathroom() {
                 </div>
 
                 <div className="row">
+
                     <div className="form_option">WC</div>
                     <div className="form_checkbox"><input type="checkbox" id="customCheckbox1"/><label
                         htmlFor="customCheckbox1"></label><span></span></div>
