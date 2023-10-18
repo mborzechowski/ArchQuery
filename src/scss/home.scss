@@ -1,0 +1,30 @@
+
+.main_page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 60vh;
+  margin-top: 25vh;
+  font-weight: 450;
+  font-family: "Jost", sans-serif;
+
+  &_menu {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 10rem;
+    gap: 5rem;
+    padding: 0 15rem 0 0.5rem;
+
+    &_options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+    }
+  }
+}
+
+.logo {
+  padding-top: 1.5rem;
+}

@@ -1,12 +1,18 @@
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Questionnaire from "./components/Questionnaire.jsx";
+import Home from "./components/Home.jsx";
 import './scss/App.scss'
 
 function App() {
 
     return (
-        <div className="container">
-        <Questionnaire />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home/>}/>
+                <Route path="/questionnaire" element={<Questionnaire/>}/>
+            </Routes>
+        </Router>
     )
 }
+
 export default App

@@ -1,18 +1,15 @@
 import {useEffect, useState} from 'react';
-import Bathroom from "./Bathroom.jsx";
-import Bedroom from "./Bedroom.jsx";
-import Kitchen from "./Kitchen.jsx";
-import Other from "./Others.jsx";
+import "../scss/questionnaire.scss";
 import supabase from "../services/supabase.js";
 
 export default function Questionnaire() {
-    const [notes, setNotes] = useState([])
+    const [items, setItems] = useState([])
 
     useEffect(() => {
-        getNotes();
+        getItems();
     }, []);
 
-    async function getNotes() {
+    async function getItems() {
         try {
             const {data, error} = await supabase.from('Query Items').select('*');
 
@@ -20,13 +17,13 @@ export default function Questionnaire() {
                 throw error;
             }
 
-            data && setNotes(data);
+            data && setItems(data);
         } catch (error) {
             console.error('Something went wrong', error);
         }
     }
 
-    const Rooms = function ({data}) {
+    const RoomsTypesItems = function ({data}) {
         const groupedByRoom = data.reduce((acc, current) =>{
             const {room,type,name} = current;
             if (!acc[room]){
@@ -62,27 +59,42 @@ export default function Questionnaire() {
             ));
         };
         const generateItemDivs = (names) => {
-            return names.map((name, index) => (
-                <div key={index} className="row">
-                    <div className="form_option">{name}</div>
-                    <div className="form_checkbox"><input type="checkbox" id={name}/><label
-                        htmlFor={name}></label><span></span></div>
+            return names.map((name, idx) => (
+                <div key={idx} className="row">
+                    <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
+                    <div className="form_checkbox">
+                        <input
+                            type="checkbox"
+                            id={`checkbox-${name}-${idx}`}
+                            onChange={() => handleCheckboxChange(name, idx)}
+                        />
+                        <label htmlFor={`checkbox-${name}-${idx}`}></label>
+                        <span></span>
+                    </div>
                 </div>
             ));
         };
         return <div>{generateDivs()}</div>;
     }
 
+    const handleCheckboxChange = (name, suffix) => {
+        const optionElement = document.getElementById(`option-${name}-${suffix}`);
+        const checkboxElement = document.getElementById(`checkbox-${name}-${suffix}`);
+
+        if (checkboxElement.checked) {
+            optionElement.style.color = '#0000ff';
+        } else {
+            optionElement.style.color = '';
+        }
+    };
+
     return (
         <>
+            <div className="container">
             <div className="form_top">ankieta dotycząca wyposażenia wnętrza <button
                 className="btn_form_top">wyślij </button></div>
-
-            <Bathroom/>
-            <Bedroom/>
-            <Kitchen/>
-            <Other/>
-            <Rooms data={notes} />
+            <RoomsTypesItems data={items} />
+            </div>
         </>
     )
 }
