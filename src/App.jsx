@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Questionnaire from "./components/Questionnaire.jsx";
 import Home from "./components/Home.jsx";
-import './scss/App.scss'
+import './scss/main.scss'
 
 function App() {
 

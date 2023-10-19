@@ -1,6 +1,5 @@
-
 import {  Link  } from 'react-router-dom'
-import "../scss/home.scss"
+import "../scss/_home.scss"
 export default function Home() {
 
 
@@ -9,7 +8,7 @@ export default function Home() {
             <div className="main_page"><img src="projekt.png" alt="projekt" />
                 <div className="main_page_menu"><span className="logo">AGATA TOFEL</span>
                     <nav className="main_page_menu_options">
-                        <Link to="/questionnaire"><div>ANKIETA</div></Link>
+                        <Link to="/questionnaire" className="custom_link"><div>ANKIETA</div></Link>
                         <div>PYTANIA WSTĘPNE</div>
                         <div>CV</div>
                         <div>KONTAKT</div>

@@ -1,3 +1,4 @@
+@import "variables";
 
 .main_page {
   display: flex;
@@ -5,8 +6,10 @@
   align-items: flex-start;
   height: 60vh;
   margin-top: 25vh;
-  font-weight: 450;
-  font-family: "Jost", sans-serif;
+  font-weight: 500;
+  font-family: $primary-font;
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
 
   &_menu {
     display: flex;
@@ -20,11 +23,17 @@
       display: flex;
       flex-direction: column;
       gap: 0.8rem;
-
     }
   }
 }
 
 .logo {
   padding-top: 1.5rem;
+}
+
+.custom_link{
+  text-decoration: none;
+  &:visited{
+    color: black;
+  }
 }

@@ -23,11 +23,25 @@ export default function Questionnaire() {
         }
     }
 
+    async function fetchItemImage(imageName) {
+        const {data, error} = await supabase
+            .storage
+            .from('your_storage_bucket_name')
+            .download(imageName);
+
+        if (error) {
+            console.error('Error downloading image:', error.message);
+            return null;
+        }
+
+        return data;
+    }
+
     const RoomsTypesItems = function ({data}) {
-        const groupedByRoom = data.reduce((acc, current) =>{
-            const {room,type,name} = current;
-            if (!acc[room]){
-                acc[room] ={};
+        const groupedByRoom = data.reduce((acc, current) => {
+            const {room, type, name} = current;
+            if (!acc[room]) {
+                acc[room] = {};
             }
             if (!acc[room][type]) {
                 acc[room][type] = [];
@@ -59,20 +73,30 @@ export default function Questionnaire() {
             ));
         };
         const generateItemDivs = (names) => {
-            return names.map((name, idx) => (
-                <div key={idx} className="row">
-                    <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
-                    <div className="form_checkbox">
-                        <input
-                            type="checkbox"
-                            id={`checkbox-${name}-${idx}`}
-                            onChange={() => handleCheckboxChange(name, idx)}
+
+            return names.map((name, idx) => {
+                const imageName = `${name}.png`
+                return (
+
+                    <div key={idx} className="row">
+                        <img
+                            src={`data:image/png;base64,${fetchItemImage(imageName)?.toString('base64')}`}
+                            alt=""
+                            className="query_item_img"
                         />
-                        <label htmlFor={`checkbox-${name}-${idx}`}></label>
-                        <span></span>
+                        <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
+                        <div className="form_checkbox">
+                            <input
+                                type="checkbox"
+                                id={`checkbox-${name}-${idx}`}
+                                onChange={() => handleCheckboxChange(name, idx)}
+                            />
+                            <label htmlFor={`checkbox-${name}-${idx}`}></label>
+                            <span></span>
+                        </div>
                     </div>
-                </div>
-            ));
+                );
+            });
         };
         return <div>{generateDivs()}</div>;
     }
@@ -91,9 +115,9 @@ export default function Questionnaire() {
     return (
         <>
             <div className="container">
-            <div className="form_top">ankieta dotycząca wyposażenia wnętrza <button
-                className="btn_form_top">wyślij </button></div>
-            <RoomsTypesItems data={items} />
+                <div className="form_top">ankieta dotycząca wyposażenia wnętrza <button
+                    className="btn_form_top">wyślij </button></div>
+                <RoomsTypesItems data={items}/>
             </div>
         </>
     )
