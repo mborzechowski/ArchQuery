@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react';
 import "../scss/questionnaire.scss";
 import supabase from "../services/supabase.js";
+import {  Link  } from 'react-router-dom'
+import Footer from "./Footer.jsx";
 
 export default function Questionnaire() {
     const [items, setItems] = useState([])
@@ -21,20 +23,6 @@ export default function Questionnaire() {
         } catch (error) {
             console.error('Something went wrong', error);
         }
-    }
-
-    async function fetchItemImage(imageName) {
-        const {data, error} = await supabase
-            .storage
-            .from('your_storage_bucket_name')
-            .download(imageName);
-
-        if (error) {
-            console.error('Error downloading image:', error.message);
-            return null;
-        }
-
-        return data;
     }
 
     const RoomsTypesItems = function ({data}) {
@@ -75,13 +63,13 @@ export default function Questionnaire() {
         const generateItemDivs = (names) => {
 
             return names.map((name, idx) => {
-                const imageName = `${name}.png`
+                const image = `${name}.png`
                 return (
 
                     <div key={idx} className="row">
                         <img
-                            src={`data:image/png;base64,${fetchItemImage(imageName)?.toString('base64')}`}
-                            alt=""
+                            src={image}
+                            alt={name}
                             className="query_item_img"
                         />
                         <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
@@ -118,6 +106,8 @@ export default function Questionnaire() {
                 <div className="form_top">ankieta dotycząca wyposażenia wnętrza <button
                     className="btn_form_top">wyślij </button></div>
                 <RoomsTypesItems data={items}/>
+                <Link to="/" className="centered_image"><img src="home.png" alt="Home" className="home"/></Link>
+                <Footer/>
             </div>
         </>
     )

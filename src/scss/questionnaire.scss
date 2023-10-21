@@ -62,7 +62,7 @@
 
   .form_option {
     height: 2rem;
-    width: 12rem;
+    width: 13rem;
     padding-top: 1rem;
     padding-left: 0.5rem;
     border-top: 1px solid black;
@@ -95,10 +95,11 @@
   padding-top: 1rem;
   width: 3rem;
 
-  & input{
+  & input {
     display: none;
   }
-  & label{
+
+  & label {
     width: 2rem;
     height: 2rem;
     background-color: #f2f7fa;
@@ -106,8 +107,9 @@
     display: inline-block;
     margin-bottom: 1rem;
 
-}
-  & input:checked + label::after{
+  }
+
+  & input:checked + label::after {
     content: "";
     display: flex;
     background: url("../assets/x.png") center/contain no-repeat;
@@ -123,9 +125,15 @@
   color: #0000ff;
 }
 
-.query_item_img{
+.query_item_img {
   height: 3rem;
   width: 3rem;
+  border-top: solid black 1px;
+}
 
-  border-top: solid black 1px ;
+.centered_image {
+  display: flex;
+  margin: 5rem auto;
+  align-items: center;
+  justify-content: center;
 }
