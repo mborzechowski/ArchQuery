@@ -74,7 +74,6 @@
 .row, .form_headers {
   display: flex;
   align-items: center;
-
 }
 
 .form_headers {
@@ -90,11 +89,9 @@
   align-items: center;
   justify-content: center;
   border-top: 1px black solid;
-  border-left: 1px black solid;
   height: 2rem;
   padding-top: 1rem;
   width: 3rem;
-
   & input {
     display: none;
   }
@@ -106,7 +103,6 @@
     cursor: pointer;
     display: inline-block;
     margin-bottom: 1rem;
-
   }
 
   & input:checked + label::after {
@@ -120,6 +116,7 @@
     background-size: 1.5rem;
   }
 }
+
 
 .form_checkbox input:checked + label + span {
   color: #0000ff;

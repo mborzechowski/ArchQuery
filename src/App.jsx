@@ -1,7 +1,10 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Questionnaire from "./components/Questionnaire.jsx";
 import Home from "./components/Home.jsx";
+import Questions from "./components/Questions.jsx";
 import './scss/main.scss'
+import Login from "./components/Login.jsx";
+
 
 function App() {
 
@@ -10,6 +13,10 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/questionnaire" element={<Questionnaire/>}/>
+                <Route path="/questions" element={<Questions/>}/>
+                <Route path="/login" element={<Login/>}/>
+
+
             </Routes>
         </Router>
     )

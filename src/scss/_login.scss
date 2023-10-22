@@ -1,0 +1,78 @@
+@import "variables";
+
+.login_page {
+  font-family: $primary-font;
+
+}
+
+.login_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30rem;
+  height: 30rem;
+  padding: 3rem;
+  transform: translate(-50%, -50%);
+  background: #46a8fd;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading_login_box {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-align: center;
+}
+
+.user_box {
+  position: relative;
+}
+
+.user_box_input {
+  width: 100%;
+  padding: 1rem 0;
+  color: #fff;
+  margin-bottom: 2rem;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.user_box_label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.8rem 0;
+  font-size:0.8rem;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.5s;
+
+}
+
+.login_box .user_box input:focus~label,
+.login_box .user_box input:valid~label {
+  top: -1.3rem;
+  left: 0;
+  color: #fdfdfd;
+  font-size: 0.8rem;
+}
+
+.login_box_button {
+  position: relative;
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  color: #8ab0df;
+  text-decoration: none;
+  margin-top: 2rem;
+  border-radius: 0;
+  width: 10rem;
+  height: 10rem;
+}
+
+
+

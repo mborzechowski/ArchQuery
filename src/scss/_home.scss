@@ -31,12 +31,46 @@
   padding-top: 1.5rem;
 }
 
-.custom_link{
+.custom_link {
   text-decoration: none;
-  &:visited{
+
+  &:visited {
     color: black;
   }
-  &:hover{
+
+  &:hover {
     color: blue;
   }
 }
+.login_icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  &:hover{
+    stroke: blue;
+    fill: blue;
+  }
+}
+
+.icon-container{
+  position: absolute;
+  top: 1rem;
+  right: 3rem;
+  .tooltip {
+    visibility: hidden;
+    color: blue;
+    padding-top: 0.5rem;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: -0.4rem;
+    transition: opacity 0.3s, visibility 0.3s, top 0.3s;
+  }
+}
+
+.icon-container:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  top: 3rem;
+}
+
+

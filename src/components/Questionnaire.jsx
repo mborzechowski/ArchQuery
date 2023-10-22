@@ -1,5 +1,4 @@
 import {useEffect, useState} from 'react';
-import "../scss/questionnaire.scss";
 import supabase from "../services/supabase.js";
 import {  Link  } from 'react-router-dom'
 import Footer from "./Footer.jsx";
