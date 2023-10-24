@@ -18,6 +18,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
 }
 
 .heading_login_box {
@@ -29,10 +30,11 @@
 
 .user_box {
   position: relative;
+
 }
 
 .user_box_input {
-  width: 100%;
+  width: 20rem;
   padding: 1rem 0;
   color: #fff;
   margin-bottom: 2rem;
@@ -63,16 +65,46 @@
 }
 
 .login_box_button {
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  display: flex;
   padding: 0.6rem 1.4rem;
-  color: #8ab0df;
+  color: #1f59a0;
   text-decoration: none;
   margin-top: 2rem;
-  border-radius: 0;
-  width: 10rem;
-  height: 10rem;
+  width: 5em;
+  height: 5rem;
+  border-radius: 50%;
+  left: 5rem;
+  bottom: 1rem;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
+  transition: all 0.3s;
+  &:hover{
+    width: 5.5rem;
+    height: 5.5rem;
+  }
 }
 
+.home-button{
+  position: absolute;
+  top: 7rem;
+  left: 31rem;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
+  transition: all 0.3s;
+  &:hover{
+    width: 5.5rem;
+    height: 5.5rem;
+  }
+}
 
 

@@ -17,7 +17,6 @@ export default function Questionnaire() {
             if (error) {
                 throw error;
             }
-
             data && setItems(data);
         } catch (error) {
             console.error('Something went wrong', error);
