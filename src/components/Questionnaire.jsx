@@ -34,7 +34,6 @@ export default function Questionnaire() {
             }
             acc[room][type].push(name);
             return acc;
-
         }, {});
         const generateDivs = () => {
             return Object.entries(groupedByRoom).map(([room, types], index) => (
@@ -111,12 +110,3 @@ export default function Questionnaire() {
     )
 }
 
-
-// useEffect(() => {
-//     async function fetchData() {
-//         await getNotes();
-//         console.log(notes, "log")
-//     }
-//     fetchData();
-//
-// }, []);
