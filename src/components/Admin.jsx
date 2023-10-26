@@ -1,50 +1,51 @@
 import {Link} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import supabase from "../services/supabase";
+import Questionnaire from "./Questionnaire.jsx";
 
 
 export default function Admin() {
     const [openModal, setOpenModal] = useState(null);
-    const [items, setItems] = useState([])
-
-    useEffect(() => {
-        getItems();
-    }, []);
-    async function getItems() {
-        try {
-            const {data, error} = await supabase.from('Query Items').select('*');
-
-            if (error) {
-                throw error;
-            }
-            data && setItems(data);
-        } catch (error) {
-            console.error('Something went wrong', error);
-        }
-    }
-    const CheckboxItems = ({data}) =>{
-        const groupedByRoom = data.reduce((acc, current) => {
-            const {room, type, name} = current;
-            if (!acc[room]) {
-                acc[room] = {};
-            }
-            if (!acc[room][type]) {
-                acc[room][type] = [];
-            }
-            acc[room][type].push(name);
-            return acc;
-        }, {});
-        return (
-            <>
-                {console.log(groupedByRoom)}
-                {Object.entries(groupedByRoom).map(([name, room, type], index) => (
-                    <div key={index}>
-                        {name} + {room} + {type} + {index}
-                    </div>
-                ))}
-            </>
-        );
-    };
+    // const [items, setItems] = useState([])
+    //
+    // useEffect(() => {
+    //     getItems();
+    // }, []);
+    // async function getItems() {
+    //     try {
+    //         const {data, error} = await supabase.from('Query Items').select('*');
+    //
+    //         if (error) {
+    //             throw error;
+    //         }
+    //         data && setItems(data);
+    //     } catch (error) {
+    //         console.error('Something went wrong', error);
+    //     }
+    // }
+    // const CheckboxItems = ({data}) =>{
+    //     const groupedByRoom = data.reduce((acc, current) => {
+    //         const {room, type, name} = current;
+    //         if (!acc[room]) {
+    //             acc[room] = {};
+    //         }
+    //         if (!acc[room][type]) {
+    //             acc[room][type] = [];
+    //         }
+    //         acc[room][type].push(name);
+    //         return acc;
+    //     }, {});
+    //     return (
+    //         <>
+    //             {console.log(groupedByRoom)}
+    //             {Object.entries(groupedByRoom).map(([name, room, type], index) => (
+    //                 <div key={index}>
+    //                     {name} + {room} + {type} + {index}
+    //                 </div>
+    //             ))}
+    //         </>
+    //     );
+    // };
 
 
 
@@ -65,7 +66,7 @@ export default function Admin() {
                  <div className="modal_overlay">
                      <div className="modal_content">
                          <button onClick={handleCloseModal}>X</button>
-                         <CheckboxItems data={items}/>
+
                      </div>
                  </div>
                  </>
@@ -76,6 +77,7 @@ export default function Admin() {
                         <div className="modal_overlay">
                             <div className="modal_content">
                                 <button onClick={handleCloseModal}>X</button>
+                                <Questionnaire/>
                             </div>
                         </div>
                     </>

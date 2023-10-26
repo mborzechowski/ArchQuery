@@ -3,6 +3,7 @@ import supabase from "../services/supabase.js";
 import {  Link  } from 'react-router-dom'
 import Footer from "./Footer.jsx";
 
+
 export default function Questionnaire() {
     const [items, setItems] = useState([])
 

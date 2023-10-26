@@ -1,11 +1,11 @@
 @import "variables";
 
-.login_page {
+.register_page {
   font-family: $primary-font;
 
 }
 
-.login_box {
+.register_box {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -13,7 +13,6 @@
   height: 30rem;
   padding: 3rem;
   transform: translate(-50%, -50%);
-  background: #46a8fd;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -22,53 +21,51 @@
   box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
 }
 
-.heading_login_box {
-    margin-bottom: 3rem;
-  color: #fff;
+.heading_register_box {
+  margin-bottom: 3rem;
+  color: blue;
   text-align: center;
 }
 
 .user_box {
   position: relative;
-
 }
 
-.user_box_input {
+.user_box_input_register {
   width: 20rem;
   padding: 1rem 0;
-  color: #fff;
+  color: black;
   margin-bottom: 2rem;
   border: none;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid blue;
   outline: none;
   background: transparent;
 }
 
-.user_box_label {
+.user_box_label_register {
   position: absolute;
   top: 0;
   left: 0;
   padding: 0.8rem 0;
-  font-size:0.8rem;
-  color: #fff;
+  font-size: 0.8rem;
+  color: black;
   pointer-events: none;
   transition: 0.5s;
 
 }
 
-.login_box .user_box input:focus~label,
-.login_box .user_box input:valid~label {
+.register_box .user_box input:focus ~ label,
+.register_box .user_box input:valid ~ label {
   top: -1.3rem;
   left: 0;
-  color: #fdfdfd;
+  color: blue;
   font-size: 0.8rem;
 }
 
-.login_box_button {
+.register_box_button {
   position: absolute;
   display: flex;
   padding: 0.6rem 1.4rem;
-  color: #1f59a0;
   text-decoration: none;
   margin-top: 2rem;
   width: 5em;
@@ -82,29 +79,12 @@
   border: none;
   box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
   transition: all 0.3s;
-  &:hover{
+
+  &:hover {
     width: 5.5rem;
     height: 5.5rem;
   }
 }
 
-.home_button{
-  position: absolute;
-  top: 7rem;
-  left: 31rem;
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
-  transition: all 0.3s;
-  &:hover{
-    width: 5.5rem;
-    height: 5.5rem;
-  }
-}
 
 
