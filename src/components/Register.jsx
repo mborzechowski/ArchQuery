@@ -11,7 +11,6 @@ export default function Register(){
         e.preventDefault();
 
         const formElements = e.currentTarget.elements;
-        console.log(formElements);
 
         let { data, error } = await supabase.auth.signUp({
             email: formElements[0].value,
@@ -27,6 +26,41 @@ export default function Register(){
 
         console.error('something went wrong', error);
     }
+
+    // async function onRegister(e) {
+    //     e.preventDefault();
+    //
+    //     const formElements = e.currentTarget.elements;
+    //
+    //     let { user, error: signUpError } = await supabase.auth.signUp({
+    //         email: formElements[0].value,
+    //         password: formElements[1].value,
+    //     });
+    //
+    //     if (signUpError) {
+    //         console.error('Registration error', signUpError);
+    //         return;
+    //     }
+    //     const { data, error: insertError } = await supabase
+    //         .from('profiles')
+    //         .upsert([
+    //             {
+    //                 id: user.id,
+    //                 email: formElements[0].value,
+    //                 role: "standard user"
+    //             }
+    //         ]);
+    //
+    //     if (insertError) {
+    //         console.error('Error inserting user data', insertError);
+    //         return;
+    //     }
+    //
+    //     console.log('Registration and user data insertion successful');
+    //     console.log(data);
+    //
+    //     navigation('/');
+    // }
 
 
     return (
@@ -50,7 +84,7 @@ export default function Register(){
                         <img src="home.png" alt="Home" className="home"/>
                     </Link>
                     <Link to="/login" className="flip_icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" id="flip" c><g data-name="Layer 2"><path d="M6.09 19h12l-1.3 1.29a1 1 0 0 0 1.42 1.42l3-3a1 1 0 0 0 0-1.42l-3-3a1 1 0 0 0-1.42 0 1 1 0 0 0 0 1.42l1.3 1.29h-12a1.56 1.56 0 0 1-1.59-1.53V13a1 1 0 0 0-2 0v2.47A3.56 3.56 0 0 0 6.09 19zm-.3-9.29a1 1 0 1 0 1.42-1.42L5.91 7h12a1.56 1.56 0 0 1 1.59 1.53V11a1 1 0 0 0 2 0V8.53A3.56 3.56 0 0 0 17.91 5h-12l1.3-1.29a1 1 0 0 0 0-1.42 1 1 0 0 0-1.42 0l-3 3a1 1 0 0 0 0 1.42z" data-name="flip-2"></path></g></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" id="flip"><g data-name="Layer 2"><path d="M6.09 19h12l-1.3 1.29a1 1 0 0 0 1.42 1.42l3-3a1 1 0 0 0 0-1.42l-3-3a1 1 0 0 0-1.42 0 1 1 0 0 0 0 1.42l1.3 1.29h-12a1.56 1.56 0 0 1-1.59-1.53V13a1 1 0 0 0-2 0v2.47A3.56 3.56 0 0 0 6.09 19zm-.3-9.29a1 1 0 1 0 1.42-1.42L5.91 7h12a1.56 1.56 0 0 1 1.59 1.53V11a1 1 0 0 0 2 0V8.53A3.56 3.56 0 0 0 17.91 5h-12l1.3-1.29a1 1 0 0 0 0-1.42 1 1 0 0 0-1.42 0l-3 3a1 1 0 0 0 0 1.42z" data-name="flip-2"></path></g></svg>
                     </Link>
                 </form>
             </div>

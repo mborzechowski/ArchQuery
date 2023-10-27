@@ -2,10 +2,12 @@ import {Link} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import supabase from "../services/supabase";
 import Questionnaire from "./Questionnaire.jsx";
-
+import { useAuth } from '../services/AuthContext.jsx';
 
 export default function Admin() {
     const [openModal, setOpenModal] = useState(null);
+    const { user } = useAuth();
+    console.log("user", user)
     // const [items, setItems] = useState([])
     //
     // useEffect(() => {

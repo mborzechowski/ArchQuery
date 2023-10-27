@@ -6,9 +6,14 @@ import Footer from "./Footer.jsx";
 
 export default function Questionnaire() {
     const [items, setItems] = useState([])
+    const [userName, setUserName] = useState('');
+    const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
 
     useEffect(() => {
         getItems();
+        console.log('user', userName)
+        console.log('check', selectedCheckboxes)
+        console.log('items', items)
     }, []);
 
     async function getItems() {
@@ -75,6 +80,7 @@ export default function Questionnaire() {
                             <input
                                 type="checkbox"
                                 id={`checkbox-${name}-${idx}`}
+                                checked={selectedCheckboxes[`${name}-${idx}`]}
                                 onChange={() => handleCheckboxChange(name, idx)}
                             />
                             <label htmlFor={`checkbox-${name}-${idx}`}></label>
@@ -87,14 +93,46 @@ export default function Questionnaire() {
         return <div>{generateDivs()}</div>;
     }
 
+    const handleSendButtonClick = async () => {
+        try {
+
+            if (!userName.trim()) {
+                alert('Proszę wprowadzić Imię / Nazwę.');
+                return;
+            }
+            const dataToSave = {
+                user_name: userName,
+                items: Object.entries(selectedCheckboxes),
+            };
+            console.log("JSON:", Object.entries(selectedCheckboxes))
+            const { data, error } = await supabase.from('answers_questionnaire').insert([dataToSave]);
+
+            if (error) {
+                throw error;
+            }
+
+            console.log('Dane zostały zapisane:', data);
+            setUserName('');
+            setSelectedCheckboxes({});
+        } catch (error) {
+            console.error('Coś poszło nie tak:', error);
+        }
+    };
+
     const handleCheckboxChange = (name, suffix) => {
         const optionElement = document.getElementById(`option-${name}-${suffix}`);
         const checkboxElement = document.getElementById(`checkbox-${name}-${suffix}`);
 
         if (checkboxElement.checked) {
             optionElement.style.color = '#0000ff';
+            setSelectedCheckboxes((prevSelected) => ({ ...prevSelected, [`${name}-${suffix}`]: true }));
         } else {
             optionElement.style.color = '';
+            setSelectedCheckboxes((prevSelected) => {
+                const updatedSelected = { ...prevSelected };
+                delete updatedSelected[`${name}-${suffix}`];
+                return updatedSelected;
+            });
         }
     };
 
@@ -102,7 +140,13 @@ export default function Questionnaire() {
         <>
             <div className="container">
                 <div className="form_top">ankieta dotycząca wyposażenia wnętrza <button
-                    className="btn_form_top">wyślij </button></div>
+                    className="btn_form_top" onClick={handleSendButtonClick}>wyślij </button></div>
+                <input
+                    type="text"
+                    placeholder="Imię i nazwisko"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value) }
+                />
                 <RoomsTypesItems data={items}/>
                 <Link to="/" className="centered_image"><img src="home.png" alt="Home" className="home"/></Link>
                 <Footer/>
