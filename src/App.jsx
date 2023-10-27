@@ -7,6 +7,7 @@ import Admin from "./components/Admin.jsx";
 import Login from "./components/Login.jsx";
 import Register from './components/Register.jsx';
 import {AuthProvider} from './services/AuthContext.jsx';
+import Contact from "./components/Contact.jsx";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/admin" element={<Admin/>}/>
                     <Route path="/register" element={<Register/>}/>
+                    <Route path="/contact" element={<Contact/>}/>
 
 
                 </Routes>

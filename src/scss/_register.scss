@@ -66,8 +66,6 @@
   position: absolute;
   display: flex;
   padding: 0.6rem 1.4rem;
-  text-decoration: none;
-  margin-top: 2rem;
   width: 5em;
   height: 5rem;
   border-radius: 50%;
@@ -86,5 +84,22 @@
   }
 }
 
-
+.flip_icon {
+    position: absolute;
+    top: 15rem;
+    left: -2rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
+    transition: all 0.3s;
+    &:hover{
+      width: 5.5rem;
+      height: 5.5rem;
+    }
+}
 

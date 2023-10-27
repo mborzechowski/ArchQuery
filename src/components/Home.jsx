@@ -58,7 +58,9 @@ export default function Home() {
                         </Link>
 
                         <div>CV</div>
-                        <div>KONTAKT</div>
+                        <Link to="/contact" className="custom_link">
+                            <div>KONTAKT</div>
+                        </Link>
                     </nav>
                 </div>
             </div>
