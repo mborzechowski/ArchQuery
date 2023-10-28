@@ -1,35 +1,22 @@
 import {useEffect, useState} from 'react';
 import supabase from "../services/supabase.js";
-import {  Link  } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Footer from "./Footer.jsx";
+import {useAppContext} from "../services/AuthContext.jsx";
+
 
 
 export default function Questionnaire() {
-    const [items, setItems] = useState([])
     const [userName, setUserName] = useState('');
-    const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
+    const [selectedCheckboxes, setSelectedCheckboxes] = useState('');
+    const { items,  getItems } = useAppContext();
+
 
     useEffect(() => {
         getItems();
-        console.log('user', userName)
-        console.log('check', selectedCheckboxes)
-        console.log('items', items)
     }, []);
 
-    async function getItems() {
-        try {
-            const {data, error} = await supabase.from('Query Items').select('*');
-
-            if (error) {
-                throw error;
-            }
-            data && setItems(data);
-        } catch (error) {
-            console.error('Something went wrong', error);
-        }
-    }
-
-    const RoomsTypesItems = function ({data}) {
+    const RoomsTypesItems = function ({data, displayMode}) {
         const groupedByRoom = data.reduce((acc, current) => {
             const {room, type, name} = current;
             if (!acc[room]) {
@@ -67,27 +54,39 @@ export default function Questionnaire() {
 
             return names.map((name, idx) => {
                 const image = `${name}.png`
-                return (
-
-                    <div key={idx} className="row">
-                        <img
-                            src={image}
-                            alt={name}
-                            className="query_item_img"
-                        />
-                        <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
-                        <div className="form_checkbox">
-                            <input
-                                type="checkbox"
-                                id={`checkbox-${name}-${idx}`}
-                                checked={selectedCheckboxes[`${name}-${idx}`]}
-                                onChange={() => handleCheckboxChange(name, idx)}
+                if (displayMode === "standard") {
+                    return (
+                        <div key={idx} className="row">
+                            <img
+                                src={image}
+                                alt={name}
+                                className="query_item_img"
                             />
-                            <label htmlFor={`checkbox-${name}-${idx}`}></label>
-                            <span></span>
+                            <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
+                            <div className="form_checkbox">
+                                <input
+                                    type="checkbox"
+                                    id={`checkbox-${name}-${idx}`}
+                                    checked={selectedCheckboxes[`${name}-${idx}`]}
+                                    onChange={() => handleCheckboxChange(name, idx)}
+                                />
+                                <label htmlFor={`checkbox-${name}-${idx}`}></label>
+                                <span></span>
+                            </div>
                         </div>
-                    </div>
-                );
+                    )
+                } else if (displayMode === "custom") {
+                    return (
+                        <div key={idx} className="row">
+                            <img
+                                src={image}
+                                alt={name}
+                                className="query_item_img"
+                            />
+                            <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
+                        </div>
+                    )
+                }
             });
         };
         return <div>{generateDivs()}</div>;
@@ -104,8 +103,7 @@ export default function Questionnaire() {
                 user_name: userName,
                 items: Object.entries(selectedCheckboxes),
             };
-            console.log("JSON:", Object.entries(selectedCheckboxes))
-            const { data, error } = await supabase.from('answers_questionnaire').insert([dataToSave]);
+            const {data, error} = await supabase.from('answers_questionnaire').insert([dataToSave]);
 
             if (error) {
                 throw error;
@@ -125,11 +123,11 @@ export default function Questionnaire() {
 
         if (checkboxElement.checked) {
             optionElement.style.color = '#0000ff';
-            setSelectedCheckboxes((prevSelected) => ({ ...prevSelected, [`${name}-${suffix}`]: true }));
+            setSelectedCheckboxes((prevSelected) => ({...prevSelected, [`${name}-${suffix}`]: true}));
         } else {
-            optionElement.style.color = '';
+            optionElement.style.color = 'black';
             setSelectedCheckboxes((prevSelected) => {
-                const updatedSelected = { ...prevSelected };
+                const updatedSelected = {...prevSelected};
                 delete updatedSelected[`${name}-${suffix}`];
                 return updatedSelected;
             });
@@ -145,9 +143,12 @@ export default function Questionnaire() {
                     type="text"
                     placeholder="Imię i nazwisko"
                     value={userName}
-                    onChange={(e) => setUserName(e.target.value) }
+                    onChange={(e) => setUserName(e.target.value)}
                 />
-                <RoomsTypesItems data={items}/>
+                <RoomsTypesItems
+                    data={items}
+                    displayMode="standard"
+                    />
                 <Link to="/" className="centered_image"><img src="home.png" alt="Home" className="home"/></Link>
                 <Footer/>
             </div>

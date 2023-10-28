@@ -1,12 +1,13 @@
 import { createContext, useContext, useState } from 'react';
+import supabase from "../services/supabase.js";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
+export const AppContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     const login = (userData) => {
-
         setUser(userData);
     };
 
@@ -21,6 +22,33 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
+export const AppProvider = ({ children }) => {
+    const [items, setItems] = useState([]);
+    // const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
+
+    const getItems = async () => {
+        try {
+            const { data, error } = await supabase.from('Query Items').select('*');
+            if (error) {
+                throw error;
+            }
+            data && setItems(data);
+        } catch (error) {
+            console.error('Something went wrong', error);
+        }
+    };
+
+    return (
+        <AppContext.Provider value={{ items, setItems,  getItems }}>
+            {children}
+        </AppContext.Provider>
+    );
+};
+
 export const useAuth = () => {
     return useContext(AuthContext);
+};
+
+export const useAppContext = () => {
+    return useContext(AppContext);
 };

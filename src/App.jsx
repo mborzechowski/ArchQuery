@@ -8,25 +8,27 @@ import Login from "./components/Login.jsx";
 import Register from './components/Register.jsx';
 import {AuthProvider} from './services/AuthContext.jsx';
 import Contact from "./components/Contact.jsx";
+import {AppProvider} from "./services/AuthContext.jsx";
 
 function App() {
 
     return (
-        <AuthProvider>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/questionnaire" element={<Questionnaire/>}/>
-                    <Route path="/questions" element={<Questions/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/admin" element={<Admin/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/contact" element={<Contact/>}/>
+        <AppProvider>
+            <AuthProvider>
+                <Router>
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/questionnaire" element={<Questionnaire/>}/>
+                        <Route path="/questions" element={<Questions/>}/>
+                        <Route path="/login" element={<Login/>}/>
+                        <Route path="/admin" element={<Admin/>}/>
+                        <Route path="/register" element={<Register/>}/>
+                        <Route path="/contact" element={<Contact/>}/>
 
-
-                </Routes>
-            </Router>
-        </AuthProvider>
+                    </Routes>
+                </Router>
+            </AuthProvider>
+        </AppProvider>
     )
 }
 

@@ -21,6 +21,9 @@
     font-weight: 600;
     font-size: 1.5rem;
     font-family: $primary-font;
+    &:hover{
+      color: blue;
+    }
   }
 }
 
