@@ -1,12 +1,12 @@
 import {Link} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import supabase from "../services/supabase";
-import {useAuth} from '../services/AuthContext.jsx';
+
 import closeButton from "../assets/x.png"
 
 export default function Admin() {
     const [openModal, setOpenModal] = useState(null);
-    const {user} = useAuth();
+
     const [items, setItems] = useState([]);
     const [questions, setQuestions] = useState([])
     const deleteIcon = <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 60 60" id="delete"
@@ -22,19 +22,20 @@ export default function Admin() {
     useEffect(() => {
         getItems();
         getQuestions()
-        console.log(items)
-        console.log(questions)
+
+        console.log("question", questions)
     }, [openModal]);
 
-    const handleDeleteItem = async (itemId) => {
+    const handleDelete = async (itemId, query) => {
         try {
             const {error} = await supabase
-                .from('Query Items')
+                .from(query)
                 .delete()
                 .eq('id', itemId);
 
             if (!error) {
                 setItems(prevItems => prevItems.filter(item => item.id !== itemId));
+                setQuestions(prevItems => prevItems.filter(item => item.id !== itemId));
             } else {
                 console.error('Something went wrong while deleting item', error);
             }
@@ -42,6 +43,7 @@ export default function Admin() {
             console.error('Something went wrong while deleting item', error);
         }
     };
+
 
     const getItems = async () => {
         try {
@@ -57,17 +59,18 @@ export default function Admin() {
 
     const getQuestions = async () => {
         try {
-            const {data,error} = await supabase.from('questions').select('question');
-
+            const { data, error } = await supabase.from('questions').select('*');
             if (error) {
                 throw error;
             }
 
-            data && setQuestions(data);
-            if (data) {
-                setQuestions(Object.values(data).map(entry => entry.question));
-            }
+            const transformedData = data.map(item => ({
+                id: item.id,
+                question: item.question,
+            }));
 
+            console.log("transform", transformedData);
+            data && setQuestions(transformedData);
         } catch (error) {
             console.error('Something went wrong', error);
         }
@@ -124,7 +127,7 @@ export default function Admin() {
                                                     <td> {item.room}</td>
                                                     <td> {item.type}</td>
                                                     <td><img src={image} alt={item.name}/></td>
-                                                    <td><button className="delete_btn" onClick={() => handleDeleteItem(item.id)}>{deleteIcon}</button></td>
+                                                    <td><button className="delete_btn" onClick={() => handleDelete(item.id, 'Query Items' )}>{deleteIcon}</button></td>
                                                 </tr>
                                             )
                                         })
@@ -157,8 +160,8 @@ export default function Admin() {
                                             return (
                                                 <tr key={index}>
                                                     <td>{index +1}</td>
-                                                    <td>{question}</td>
-                                                    <td><button className="delete_btn" onClick={() => handleDeleteItem(question.id)}>{deleteIcon}</button></td>
+                                                    <td>{question.question}</td>
+                                                    <td><button className="delete_btn" onClick={() => handleDelete(question.id, "questions" )}>{deleteIcon}</button></td>
                                                 </tr>
                                             )
                                         })
