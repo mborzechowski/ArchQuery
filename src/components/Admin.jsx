@@ -1,14 +1,17 @@
 import {Link} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import supabase from "../services/supabase";
-
 import closeButton from "../assets/x.png"
+import {useAuth} from "../services/AuthContext.jsx";
 
 export default function Admin() {
     const [openModal, setOpenModal] = useState(null);
-
+    const [openModalAdd, setOpenModalAdd] = useState(null);
+    const {user, login, logout} = useAuth();
     const [items, setItems] = useState([]);
     const [questions, setQuestions] = useState([])
+    const [rooms, setRooms] = useState([])
+    const [types, setTypes] = useState([])
     const deleteIcon = <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 60 60" id="delete"
                             stroke="black" fill="black">
         <path d="M18.3,56h23.6c2.7,0,4.8-2.2,4.8-4.8V18.7h2.1c0.6,0,1-0.4,1-1v-2.3c0-2.1-1.7-3.7-3.7-3.7h-8.5V9.1c0-1.7-1.4-3.1-3.1-3.1
@@ -22,9 +25,10 @@ export default function Admin() {
     useEffect(() => {
         getItems();
         getQuestions()
-
-        console.log("question", questions)
+        getRooms()
+        getType()
     }, [openModal]);
+
 
     const handleDelete = async (itemId, query) => {
         try {
@@ -59,7 +63,7 @@ export default function Admin() {
 
     const getQuestions = async () => {
         try {
-            const { data, error } = await supabase.from('questions').select('*');
+            const {data, error} = await supabase.from('questions').select('*');
             if (error) {
                 throw error;
             }
@@ -69,8 +73,33 @@ export default function Admin() {
                 question: item.question,
             }));
 
-            console.log("transform", transformedData);
             data && setQuestions(transformedData);
+        } catch (error) {
+            console.error('Something went wrong', error);
+        }
+    };
+
+    const getRooms = async () => {
+        try {
+            let {data, error} = await supabase.from('Query Items').select('room');
+            if (error) {
+                throw error;
+            }
+            const uniqueRooms = [...new Set(data.map(item => item.room))];
+            data && setRooms(uniqueRooms)
+        } catch (error) {
+            console.error('Something went wrong', error);
+        }
+    };
+
+    const getType = async () => {
+        try {
+            let {data, error} = await supabase.from('Query Items').select('type');
+            if (error) {
+                throw error;
+            }
+            const uniqueTypes = [...new Set(data.map(item => item.type))];
+            data && setTypes(uniqueTypes)
         } catch (error) {
             console.error('Something went wrong', error);
         }
@@ -82,6 +111,10 @@ export default function Admin() {
 
     const handleCloseModal = () => {
         setOpenModal(null);
+    };
+
+    const handleAddButton = (modalId) => {
+        setOpenModalAdd(modalId);
     };
 
     return (
@@ -103,15 +136,71 @@ export default function Admin() {
                     <>
                         <div className="modal_overlay">
                             <div className="modal_content">
-                                <button onClick={handleCloseModal} className="close_btn"><img src={closeButton} alt="X"
-                                                                                              className="close_btn"/>
-                                </button>
+                                <div className="modal_buttons">
+                                    <button onClick={handleCloseModal} className="close_btn"><img src={closeButton}
+                                                                                                  alt="X"
+                                                                                                  className="close_btn"/>
+                                    </button>
+                                    <button onClick={() => handleAddButton("add_item")} className="close_btn"><img
+                                        src={closeButton}
+                                        alt="X"
+                                        className="add_btn"/>
+                                    </button>
+                                </div>
+                                {openModalAdd === "add_item" && (
+                                    <>
+                                        <div className="add_item_modal">
+                                            <button onClick={handleCloseModal} className="close_btn_add_modal"><img
+                                                src={closeButton}
+                                                alt="X"
+                                                className="close_btn"/>
+                                            </button>
+                                            <table className="items_table">
+                                                <thead>
+                                                <tr>
+                                                    <th>nazwa</th>
+                                                    <th>pokój</th>
+                                                    <th>typ</th>
+                                                    <th>ikona</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td><input type="text" placeholder="..."/></td>
+                                                    <td><select name="pokój" id="">
+                                                        {
+                                                            rooms.map(room => {
+                                                                return (
+                                                                    <option key={room} value={room}>{room}</option>
+                                                                )
+                                                            })
+                                                        }
+                                                        <option value="custom">Inny</option>
+                                                    </select>
+                                                    </td>
+                                                    <td><select name="typ" id="">{
+                                                        types.map(type => {
+                                                            return (
+                                                                <option key={type} value={type}>{type}</option>
+                                                            )
+                                                        })
+                                                    }</select></td>
+                                                    <td><input type="file"/></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </>
+                                )
+
+                                }
                                 <table className="items_table">
                                     <thead>
                                     <tr>
                                         <th>nazwa</th>
                                         <th>pokój</th>
-                                        <th>przedmiot</th>
+                                        <th>typ</th>
                                         <th>ikona</th>
                                         <th>usuń</th>
                                     </tr>
@@ -127,7 +216,10 @@ export default function Admin() {
                                                     <td> {item.room}</td>
                                                     <td> {item.type}</td>
                                                     <td><img src={image} alt={item.name}/></td>
-                                                    <td><button className="delete_btn" onClick={() => handleDelete(item.id, 'Query Items' )}>{deleteIcon}</button></td>
+                                                    <td>
+                                                        <button className="delete_btn"
+                                                                onClick={() => handleDelete(item.id, 'Query Items')}>{deleteIcon}</button>
+                                                    </td>
                                                 </tr>
                                             )
                                         })
@@ -159,9 +251,12 @@ export default function Admin() {
                                         questions.map((question, index) => {
                                             return (
                                                 <tr key={index}>
-                                                    <td>{index +1}</td>
+                                                    <td>{index + 1}</td>
                                                     <td>{question.question}</td>
-                                                    <td><button className="delete_btn" onClick={() => handleDelete(question.id, "questions" )}>{deleteIcon}</button></td>
+                                                    <td>
+                                                        <button className="delete_btn"
+                                                                onClick={() => handleDelete(question.id, "questions")}>{deleteIcon}</button>
+                                                    </td>
                                                 </tr>
                                             )
                                         })

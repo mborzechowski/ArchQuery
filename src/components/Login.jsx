@@ -16,9 +16,10 @@ export default function Login() {
         });
 
         if (!error) {
+            const { data: { user } } = await supabase.auth.getUser()
             console.log('user logged successfully');
             console.log(data);
-
+            console.log("Login:",user)
             login(data.user);
             navigation('/');
             return;

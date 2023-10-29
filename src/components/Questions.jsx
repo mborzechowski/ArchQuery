@@ -39,24 +39,12 @@ export default function Questions() {
         }));
         console.log("answers", userAnswers)
     };
-    // const GenerateQuestions = function ({data}) {
-    //     if (!Array.isArray(data) || data.length === 0) {
-    //         return null;
-    //     }
-    //
-    //     return data.map((question, index) => (
-    //         <li className="single_question" key={index}>
-    //             <input className="input_questions" type="text" placeholder=" " onChange={(e) => handleAnswerChange(question.id, e.target.value)}/>
-    //             <label className="label_questions">{question}</label>
-    //         </li>
-    //     ));
-    // }
 
     const handleSendButtonClick = async () => {
         try {
 
             if (!userName.trim()) {
-                alert('Proszę wprowadzić Imię / Nazwę.');
+                alert('Proszę podpisz się');
                 return;
             }
             const answersToSave = {
@@ -85,11 +73,12 @@ export default function Questions() {
         <>
             <div className="container container_questions">
                 <img src="logo-mini.png" alt="LOGO" className="logo_mini"/>
-                <span className="questions_list_title">pytania wstępne<button
-                    className="btn_form_top" onClick={handleSendButtonClick}>wyślij </button></span>
+                <div className="questions_list_title"><p>pytania wstępne</p><button
+                    className="btn_questions_top" onClick={handleSendButtonClick}>wyślij </button></div>
                 <input
+                    className="input_name_question"
                     type="text"
-                    placeholder="Imię i nazwisko"
+                    placeholder="nazwa / imię"
                     value={userName}
                     onChange={(e) => setUserName(e.target.value)}
                 />

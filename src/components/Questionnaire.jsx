@@ -96,7 +96,7 @@ export default function Questionnaire() {
         try {
 
             if (!userName.trim()) {
-                alert('Proszę wprowadzić Imię / Nazwę.');
+                alert('Proszę podpisz się');
                 return;
             }
             const dataToSave = {
@@ -140,8 +140,9 @@ export default function Questionnaire() {
                 <div className="form_top">ankieta dotycząca wyposażenia wnętrza <button
                     className="btn_form_top" onClick={handleSendButtonClick}>wyślij </button></div>
                 <input
+                    className="input_name"
                     type="text"
-                    placeholder="Imię i nazwisko"
+                    placeholder="nazwa / imię"
                     value={userName}
                     onChange={(e) => setUserName(e.target.value)}
                 />
