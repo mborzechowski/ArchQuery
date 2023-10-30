@@ -44,6 +44,8 @@ export default function Admin() {
         getType()
         getQueryAnswers()
         getQuestionsAnswers()
+        console.log("query",queryAnswers)
+        console.log("question",questionsAnswers)
     }, [openModal, openModalAdd]);
 
 
@@ -240,6 +242,7 @@ export default function Admin() {
                                                                                               alt="X"
                                                                                               className="close_btn"/>
                                 </button>
+
                                 <div className="answers_modal_content">
                                     <div className="answers_modal">
                                         <p className="answers_modal_titles">odpowiedzi z ankiet</p>
@@ -256,9 +259,11 @@ export default function Admin() {
                                         <p className="answers_modal_titles">odpowiedzi na pytania otwarte</p>
                                         {
                                             questionsAnswers.map(answer => {
+                                                console.log("answer", answer)
                                                 return (
-                                                    <div className="single_answer"
+                                                    <div className="single_answer" onClick={() => handleAddButton(answer.id)}
                                                          key={answer.id}>{answer.user_name} / {(answer.created_at).slice(0, 10)}</div>
+
                                                 )
                                             })
                                         }
