@@ -37,7 +37,7 @@ export default function Questions() {
             ...prevAnswers,
             [questionId]: answer,
         }));
-        console.log("answers", userAnswers)
+
     };
 
     const handleSendButtonClick = async () => {
@@ -61,7 +61,6 @@ export default function Questions() {
                 throw error;
             }
 
-            console.log('Dane zostały zapisane:', data);
             setUserName('');
             setUserAnswers({});
         } catch (error) {
@@ -91,6 +90,7 @@ export default function Questions() {
                                         className="input_questions"
                                         type="text"
                                         placeholder=" "
+                                        value={userAnswers[index]}
                                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                                     />
                                     <label className="label_questions">{question.question}</label>

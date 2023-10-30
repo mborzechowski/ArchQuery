@@ -20,6 +20,8 @@ export default function Admin() {
     const inputRoomRef = useRef(null);
     const inputTypeRef = useRef(null);
     const [addQuestion, setAddQuestion] = useState('');
+    const [queryAnswers, setQueryAnswers] = useState([]);
+    const [questionsAnswers, setQuestionsAnswers] = useState([]);
     const deleteIcon = <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 60 60" id="delete"
                             stroke="black" fill="black">
         <path d="M18.3,56h23.6c2.7,0,4.8-2.2,4.8-4.8V18.7h2.1c0.6,0,1-0.4,1-1v-2.3c0-2.1-1.7-3.7-3.7-3.7h-8.5V9.1c0-1.7-1.4-3.1-3.1-3.1
@@ -40,6 +42,8 @@ export default function Admin() {
         getQuestions()
         getRooms()
         getType()
+        getQueryAnswers()
+        getQuestionsAnswers()
     }, [openModal, openModalAdd]);
 
 
@@ -118,12 +122,37 @@ export default function Admin() {
         }
     };
 
+    const getQueryAnswers = async () => {
+        try {
+            let {data, error} = await supabase.from('answers_questionnaire').select('*');
+            if (error) {
+                throw error;
+            }
+            data && setQueryAnswers(data)
+            console.log(data)
+        } catch (error) {
+            console.error("something went wrong", error)
+        }
+    }
+    const getQuestionsAnswers = async () => {
+        try {
+            let {data, error} = await supabase.from('answer_questions').select('*');
+            if (error) {
+                throw error;
+            }
+            data && setQuestionsAnswers(data)
+            console.log(data)
+        } catch (error) {
+            console.error("something went wrong", error)
+        }
+    }
     const handleButtonClick = (modalId) => {
         setOpenModal(modalId);
     };
 
     const handleCloseModal = () => {
         setOpenModal(null);
+        setOpenModalAdd(null);
     };
 
     const handleCloseAddModal = () => {
@@ -147,7 +176,7 @@ export default function Admin() {
 
             const itemsId = items.map(item => item.id)
             const highestId = Math.max(...itemsId)
-                       const roomToSave = selectedOption === otherRoom ? inputRoomRef.current.value : selectedOption;
+            const roomToSave = selectedOption === otherRoom ? inputRoomRef.current.value : selectedOption;
             const typeToSave = type === otherType ? inputTypeRef.current.value : type;
 
             const dataToSave = {
@@ -211,6 +240,30 @@ export default function Admin() {
                                                                                               alt="X"
                                                                                               className="close_btn"/>
                                 </button>
+                                <div className="answers_modal_content">
+                                    <div className="answers_modal">
+                                        <p className="answers_modal_titles">odpowiedzi z ankiet</p>
+                                        {
+                                            queryAnswers.map(answer => {
+                                                return (
+                                                    <div className="single_answer"
+                                                         key={answer.id}>{answer.user_name} / {(answer.created_at).slice(0, 10)}</div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                    <div className="answers_modal">
+                                        <p className="answers_modal_titles">odpowiedzi na pytania otwarte</p>
+                                        {
+                                            questionsAnswers.map(answer => {
+                                                return (
+                                                    <div className="single_answer"
+                                                         key={answer.id}>{answer.user_name} / {(answer.created_at).slice(0, 10)}</div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </>
@@ -290,7 +343,7 @@ export default function Admin() {
                                                         <option>{otherType}</option>
                                                     </select>{type === otherType && (
                                                         <>
-                                                            <input ref={inputTypeRef} />
+                                                            <input ref={inputTypeRef}/>
                                                             <button onClick={handleOtherType}>OK</button>
                                                         </>
                                                     )}
@@ -369,12 +422,13 @@ export default function Admin() {
                                                         className="save_btn">{saveIcon}</button>
                                             </div>
                                             <div className="modal_adding_question">
-                                                <textarea name="newQuestion" id="newQuestion" rows={1} className="adding_question" placeholder="dodaj pytanie" onChange={(e) => setAddQuestion(e.target.value)}></textarea>
+                                                <textarea name="newQuestion" id="newQuestion" rows={1}
+                                                          className="adding_question" placeholder="dodaj pytanie"
+                                                          onChange={(e) => setAddQuestion(e.target.value)}></textarea>
                                             </div>
                                         </div>
                                     </>
                                 )
-
                                 }
                                 <table className="question_table">
                                     <thead>
