@@ -58,12 +58,13 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
                     try {
                         const img = new Image();
                         img.src = image;
-                        img.onerror = () => false; // W przypadku błędu, obraz nie istnieje
+                        img.onerror = () => false;
                         return img.complete;
                     } catch (error) {
-                        return false; // Błąd podczas ładowania obrazu
+                        return false;
                     }
                 }
+
                 if (queryAnswers) {
                     const itemsToRender = queryAnswers.items;
                     const keys = itemsToRender.map(([key]) => `option-${key}`)
@@ -71,21 +72,22 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
                     const tempImage = "question.png";
 
                     return (
-                            <div key={idx} className="row">
-                                <img
-                                    src={imageExists(image) ? image : tempImage}
-                                    alt={name}
-                                    className="query_item_img"
+                        <div key={idx} className="row">
+                            <img
+                                src={imageExists(image) ? image : tempImage}
+                                alt={name}
+                                className="query_item_img"
+                            />
+                            <div className={`form_option ${idx === names.length - 1 ? 'last_checkbox' : ''}`} id={`option-${name}-${idx}`}>{name}</div>
+                            <div className={`form_checkbox ${keys.includes(`option-${name}-${idx}`) ? 'checked' : ''}`}
+                                 id={`option-${name}-${idx}`}>
+                                <input
+                                    type="checkbox"
+                                    id={`checkbox-${name}-${idx}`}
+                                    defaultChecked={selectedCheckboxes[`${name}-${idx}`]}
                                 />
-                                <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
-                                <div className={`form_checkbox ${keys.includes(`option-${name}-${idx}`) ? 'checked' : ''}`} id={`option-${name}-${idx}`}>
-                                    <input
-                                        type="checkbox"
-                                        id={`checkbox-${name}-${idx}`}
-                                        defaultChecked={selectedCheckboxes[`${name}-${idx}`]}
-                                    />
-                                </div>
                             </div>
+                        </div>
                     )
                 } else {
                     const image = `${name}.png`
@@ -95,10 +97,10 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
                             <img
                                 src={imageExists(image) ? image : tempImage}
                                 alt={name}
-                                className="query_item_img"
+                                className={`query_item_img ${idx === names.length - 1 ? 'last_checkbox' : ''}`}
                             />
-                            <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
-                            <div className="form_checkbox">
+                            <div className={`form_option ${idx === names.length - 1 ? 'last_checkbox' : ''}`} id={`option-${name}-${idx}`}>{name}</div>
+                            <div className={`form_checkbox ${idx === names.length - 1 ? 'last_checkbox' : ''}`}>
                                 <input
                                     type="checkbox"
                                     id={`checkbox-${name}-${idx}`}
@@ -162,9 +164,10 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
     const renderFormTop = () => (
         <div className="form_top">
             ankieta dotycząca wyposażenia wnętrza{' '}
-            <button className="btn_form_top" onClick={handleSendButtonClick}>
-                wyślij{' '}
-            </button>
+
+                <button className="btn_form_top" onClick={handleSendButtonClick}>
+                    wyślij{' '}
+                </button>
         </div>
     );
 
@@ -189,6 +192,7 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
     return (
 
         <div className="container">
+            {!shouldRender && (<div className="form_top">{queryAnswers.user_name}</div>)}
             {shouldRender && renderFormTop()}
             {shouldRender && renderInputName()}
             <RoomsTypesItems

@@ -229,6 +229,17 @@ export default function Admin() {
         }
     }
 
+    function imageExists(image) {
+        try {
+            const img = new Image();
+            img.src = image;
+            img.onerror = () => false;
+            return img.complete;
+        } catch (error) {
+            return false;
+        }
+    }
+
     return (
         <>
             <div className=" container_admin">
@@ -428,13 +439,14 @@ export default function Admin() {
                                     {
                                         items.map(item => {
                                             const image = `${item.name}.png`;
+                                            const tempImage = "question.png";
 
                                             return (
                                                 <tr key={item.created_at}>
                                                     <td>{item.name}</td>
                                                     <td> {item.room}</td>
                                                     <td> {item.type}</td>
-                                                    <td><img src={image} alt={item.name}/></td>
+                                                    <td><img src={imageExists(image) ? image : tempImage} alt={item.name}/></td>
                                                     <td>
                                                         <button className="delete_btn"
                                                                 onClick={() => handleDelete(item.id, 'Query Items')}>{deleteIcon}</button>

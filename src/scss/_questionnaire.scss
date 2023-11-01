@@ -27,6 +27,7 @@
   }
 }
 
+
 .form_row {
   display: flex;
   align-items: start;
@@ -166,4 +167,8 @@
     position: absolute;
     margin-bottom: 1rem;
   }
+}
+
+.last_checkbox{
+  border-bottom: 1px solid black;
 }
