@@ -1,0 +1,107 @@
+@import "variables";
+
+.container_cv{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 200;
+  font-size: 0.8rem;
+}
+
+.cv_logo{
+  margin:10rem 0 5rem 0;
+}
+
+.cv_element_name {
+  font: $secondary-font;
+  font-weight: 200;
+  font-size: 1.5rem;
+  align-self: center;
+  margin-bottom: 1rem;
+  color: $color-lighter;
+}
+.exp{
+  padding-right: 14rem;
+}
+
+.school{
+  padding-right: 7rem;
+  margin-top: 3rem;
+}
+
+.abilities{
+ margin-top: 3rem;
+  padding-right: 13rem;
+}
+
+
+.cv_table_row{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.cv_table_left{
+  display: flex;
+  width: 27rem;
+  justify-content: end;
+  align-self: start;
+  color: $color-lighter;
+  margin-bottom: 1rem;
+}
+
+.cv_table_right{
+  width: 27rem;
+  display: flex;
+  justify-content: start;
+  flex-direction: column;
+  align-self: start;
+  margin-bottom: 1rem;
+  & p{
+    font-weight: 300;
+  }
+  & span{
+    padding-left: 4.5rem;
+  }
+}
+
+.cv_table_right_title {
+  width: 27rem;
+  display: flex;
+  justify-content: start;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.cv_table_left_title {
+  width: 27rem;
+  display: flex;
+  justify-content: end;
+  font-weight: 300;
+  color: black;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.cv_table_abilities{
+  display: flex;
+  margin-top: 0.3rem;
+  & p{
+    font-weight: 400;
+  }
+}
+
+.square{
+  width: 0.4rem;
+  height: 0.4rem;
+  border: 1px solid black;
+  margin-right: 0.4rem;
+  &.full{
+  background: black;
+  }
+}

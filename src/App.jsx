@@ -9,6 +9,7 @@ import Register from './components/Register.jsx';
 import {AuthProvider} from './services/AuthContext.jsx';
 import Contact from "./components/Contact.jsx";
 import {AppProvider} from "./services/AuthContext.jsx";
+import Cv from "./components/CV.jsx";
 
 function App() {
 
@@ -18,12 +19,13 @@ function App() {
                 <Router>
                     <Routes>
                         <Route path="/" element={<Home/>}/>
-                        <Route path="/questionnaire" element={<Questionnaire/>}/>
-                        <Route path="/questions" element={<Questions/>}/>
+                        <Route path="/ankieta" element={<Questionnaire/>}/>
+                        <Route path="/pytania" element={<Questions/>}/>
                         <Route path="/login" element={<Login/>}/>
                         <Route path="/admin" element={<Admin/>}/>
                         <Route path="/register" element={<Register/>}/>
                         <Route path="/contact" element={<Contact/>}/>
+                        <Route path="/cv" element={<Cv/>}/>
 
                     </Routes>
                 </Router>

@@ -50,10 +50,11 @@ export default function Questions() {
             const answersToSave = {
                 user_name: userName,
                 answer: {},
+
             };
 
             questions.forEach(question => {
-                answersToSave.answer[question.id] = userAnswers[question.id] || "";
+                answersToSave.answer[question.question] = userAnswers[question.id] || "";
             });
             const {data, error} = await supabase.from('answer_questions').insert([answersToSave]);
 

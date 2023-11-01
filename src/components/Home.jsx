@@ -56,8 +56,8 @@ export default function Home() {
                         <Link to="/questions" className="custom_link">
                             <div>PYTANIA WSTĘPNE</div>
                         </Link>
+                        <Link to="/cv" className="custom_link"><div>CV</div></Link>
 
-                        <div>CV</div>
                         <Link to="/contact" className="custom_link">
                             <div>KONTAKT</div>
                         </Link>

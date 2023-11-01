@@ -249,8 +249,10 @@ export default function Admin() {
                                         {
                                             queryAnswers.map(answer => {
                                                 return (
+                                                    <>
                                                     <div className="single_answer"
                                                          key={answer.id}>{answer.user_name} / {(answer.created_at).slice(0, 10)}</div>
+                                                    </>
                                                 )
                                             })
                                         }
@@ -261,9 +263,45 @@ export default function Admin() {
                                             questionsAnswers.map(answer => {
                                                 console.log("answer", answer)
                                                 return (
+                                                    <>
                                                     <div className="single_answer" onClick={() => handleAddButton(answer.id)}
                                                          key={answer.id}>{answer.user_name} / {(answer.created_at).slice(0, 10)}</div>
+                                                        {openModalAdd === answer.id && (
+                                                            <>
+                                                            <div className="add_item_modal">
+                                                                <div className="modal_buttons">
+                                                                    <button onClick={handleCloseAddModal} className="close_btn_add_modal">
+                                                                        <img
+                                                                            src={closeButton}
+                                                                            alt="X"
+                                                                            className="close_btn"/>
+                                                                    </button>
+                                                                </div>
+                                                                <table className="question_table">
+                                                                    <thead>{answer.user_name}
+                                                                    <tr>
+                                                                        <th>no.</th>
+                                                                        <th>pytanie</th>
+                                                                        <th>odpowiedź</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    {
+                                                                        Object.keys(answer.answer).map((key, index) => (
+                                                                            <tr key={index}>
+                                                                                <th>{index + 1}</th>
+                                                                                <th>{key}</th>
+                                                                                <th>{answer.answer[key]}</th>
+                                                                            </tr>
+                                                                        ))
+                                                                    }
 
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            </>
+                                                        )}
+                                                    </>
                                                 )
                                             })
                                         }
