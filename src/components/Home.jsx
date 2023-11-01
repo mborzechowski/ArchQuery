@@ -4,15 +4,45 @@ import {useAuth} from '../services/AuthContext.jsx';
 
 export default function Home() {
     const {user, logout} = useAuth();
+    const admin = "c3ec8e43-b2cd-48b2-b1a4-93e02d188ef2"
 
     const renderLoginLink = () => {
-        if (user) {
+        if (user && user.id === admin) {
 
+            return (
+                <>
+                    <Link to="/" onClick={logout} className="custom_link">
+                        <div className="icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 5 512 512"
+                                 stroke="black" fill="black"
+                                 id="logout" className="login_icon">
+                                <path
+                                    d="m366.863 323.883 22.627 22.627L480 256l-90.51-90.51-22.628 22.628L418.745 240H192v32h226.745z"></path>
+                                <path
+                                    d="M391.491 391.766C355.229 428.029 307.018 448 255.736 448c-51.287 0-99.506-19.971-135.772-56.235C83.697 355.501 64 307.285 64 256c0-51.281 19.697-99.495 55.965-135.761C156.232 83.973 204.45 64 255.736 64c51.279 0 99.491 19.973 135.755 56.238a196.044 196.044 0 0 1 7.333 7.762h40.731c-40.474-58.028-107.709-96-183.819-96C132.021 32 32 132.298 32 256c0 123.715 100.021 224 223.736 224 76.112 0 143.35-37.97 183.822-96h-40.73a194.792 194.792 0 0 1-7.337 7.766z"></path>
+                            </svg>
+                            <div className="tooltip">LOGOUT</div>
+                        </div>
+                    </Link>
+                    <Link to="/admin" className="menu_button">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="menu" stroke="black"
+                                 fill="black">
+                                <path
+                                    d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"></path>
+                            </svg>
+                        </div>
+                    </Link>
+                </>
+            );
+
+        } else if (user && user.id !== admin) {
             return (
                 <Link to="/" onClick={logout} className="custom_link">
                     <div className="icon-container">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 5 512 512" stroke="black" fill="black"
-                             id="logout" className="login_icon" >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 5 512 512"
+                             stroke="black" fill="black"
+                             id="logout" className="login_icon">
                             <path
                                 d="m366.863 323.883 22.627 22.627L480 256l-90.51-90.51-22.628 22.628L418.745 240H192v32h226.745z"></path>
                             <path
@@ -20,12 +50,13 @@ export default function Home() {
                         </svg>
                         <div className="tooltip">LOGOUT</div>
                     </div>
+
                 </Link>
             );
         } else {
 
             return (
-                <Link to="/register" className="custom_link">
+                <Link to="/login" className="custom_link">
                     <div className="icon-container">
 
                         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 5 512 512"
@@ -56,10 +87,13 @@ export default function Home() {
                         <Link to="/pytania" className="custom_link">
                             <div>PYTANIA WSTĘPNE</div>
                         </Link>
-                        <Link to="/cv" className="custom_link"><div>CV</div></Link>
+                        <Link to="/cv" className="custom_link">
+                            <div>CV</div>
+                        </Link>
 
                         <Link to="/kontact" className="custom_link">
                             <div>KONTAKT</div>
+
                         </Link>
                     </nav>
                 </div>

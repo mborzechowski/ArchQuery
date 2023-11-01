@@ -1,10 +1,11 @@
 import supabase from "../services/supabase";
-import {Link} from 'react-router-dom'
-import { useNavigate } from "react-router-dom";
-import { useAuth } from '../services/AuthContext.jsx'
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../services/AuthContext.jsx';
+
+
 export default function Login() {
     const navigation = useNavigate();
-    const { login } = useAuth();
+    const {login } = useAuth();
     async function onSignIn(e) {
         e.preventDefault();
 
@@ -27,6 +28,7 @@ export default function Login() {
 
         console.error('something went wrong', error);
     }
+
     return (
         <>
 

@@ -73,4 +73,15 @@
   top: 3rem;
 }
 
+.menu_button{
+  position: absolute;
+  top: 1rem;
+  left: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  &:hover path {
+    stroke: blue;
+    fill: blue;
+  }
+}
 

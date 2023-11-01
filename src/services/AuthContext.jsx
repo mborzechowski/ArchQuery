@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState} from 'react';
 import supabase from "../services/supabase.js";
 
 export const AuthContext = createContext();
@@ -24,8 +24,6 @@ export const AuthProvider = ({ children }) => {
 
 export const AppProvider = ({ children }) => {
     const [items, setItems] = useState([]);
-    // const [selectedCheckboxes, setSelectedCheckboxes] = useState({});
-
     const getItems = async () => {
         try {
             const { data, error } = await supabase.from('Query Items').select('*');
@@ -46,7 +44,11 @@ export const AppProvider = ({ children }) => {
 };
 
 export const useAuth = () => {
-    return useContext(AuthContext);
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
 };
 
 export const useAppContext = () => {

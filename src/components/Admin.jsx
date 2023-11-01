@@ -2,13 +2,11 @@ import {Link} from 'react-router-dom';
 import {useEffect, useState, useRef} from "react";
 import supabase from "../services/supabase";
 import closeButton from "../assets/x.png"
-import {useAuth} from "../services/AuthContext.jsx";
 import Questionnaire from "./Questionnaire.jsx";
 
 export default function Admin() {
     const [openModal, setOpenModal] = useState(null);
     const [openModalAdd, setOpenModalAdd] = useState(null);
-    const {user, login, logout} = useAuth();
     const [items, setItems] = useState([]);
     const [questions, setQuestions] = useState([]);
     const [rooms, setRooms] = useState([]);
@@ -273,6 +271,7 @@ export default function Admin() {
                                                                                 alt="X"
                                                                                 className="close_btn"/>
                                                                         </button>
+                                                                        <div className="form_top">{answer.user_name}</div>
                                                                     </div>
                                                                     <Questionnaire isAdminPage={true} queryAnswers={answer}/>
                                                                 </div>

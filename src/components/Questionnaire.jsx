@@ -17,6 +17,7 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
 
     }, []);
 
+
     const RoomsTypesItems = function ({data}) {
         const groupedByRoom = data.reduce((acc, current) => {
             const {room, type, name} = current;
@@ -76,10 +77,10 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
                             <img
                                 src={imageExists(image) ? image : tempImage}
                                 alt={name}
-                                className="query_item_img"
+                                className={`query_item_img ${idx === names.length - 1 ? 'last_checkbox' : ''}`}
                             />
                             <div className={`form_option ${idx === names.length - 1 ? 'last_checkbox' : ''}`} id={`option-${name}-${idx}`}>{name}</div>
-                            <div className={`form_checkbox ${keys.includes(`option-${name}-${idx}`) ? 'checked' : ''}`}
+                            <div className={`form_checkbox ${keys.includes(`option-${name}-${idx}`) ? 'checked' : ''} ${idx === names.length - 1 ? 'last_checkbox' : ''}`}
                                  id={`option-${name}-${idx}`}>
                                 <input
                                     type="checkbox"
@@ -192,7 +193,7 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
     return (
 
         <div className="container">
-            {!shouldRender && (<div className="form_top">{queryAnswers.user_name}</div>)}
+            {/*{!shouldRender && (<div className="form_top">{queryAnswers.user_name}</div>)}*/}
             {shouldRender && renderFormTop()}
             {shouldRender && renderInputName()}
             <RoomsTypesItems
