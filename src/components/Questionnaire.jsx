@@ -5,18 +5,19 @@ import Footer from "./Footer.jsx";
 import {useAppContext} from "../services/AuthContext.jsx";
 
 
-
-export default function Questionnaire() {
+export default function Questionnaire({isAdminPage, queryAnswers}) {
     const [userName, setUserName] = useState('');
     const [selectedCheckboxes, setSelectedCheckboxes] = useState('');
-    const { items,  getItems } = useAppContext();
+    const {items, getItems} = useAppContext();
+    const shouldRender = !isAdminPage
 
 
     useEffect(() => {
         getItems();
+
     }, []);
 
-    const RoomsTypesItems = function ({data, displayMode}) {
+    const RoomsTypesItems = function ({data}) {
         const groupedByRoom = data.reduce((acc, current) => {
             const {room, type, name} = current;
             if (!acc[room]) {
@@ -53,12 +54,46 @@ export default function Questionnaire() {
         const generateItemDivs = (names) => {
 
             return names.map((name, idx) => {
-                const image = `${name}.png`
-                if (displayMode === "standard") {
+                function imageExists(image) {
+                    try {
+                        const img = new Image();
+                        img.src = image;
+                        img.onerror = () => false; // W przypadku błędu, obraz nie istnieje
+                        return img.complete;
+                    } catch (error) {
+                        return false; // Błąd podczas ładowania obrazu
+                    }
+                }
+                if (queryAnswers) {
+                    const itemsToRender = queryAnswers.items;
+                    const keys = itemsToRender.map(([key]) => `option-${key}`)
+                    const image = `${name}.png`
+                    const tempImage = "question.png";
+
+                    return (
+                            <div key={idx} className="row">
+                                <img
+                                    src={imageExists(image) ? image : tempImage}
+                                    alt={name}
+                                    className="query_item_img"
+                                />
+                                <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
+                                <div className={`form_checkbox ${keys.includes(`option-${name}-${idx}`) ? 'checked' : ''}`} id={`option-${name}-${idx}`}>
+                                    <input
+                                        type="checkbox"
+                                        id={`checkbox-${name}-${idx}`}
+                                        defaultChecked={selectedCheckboxes[`${name}-${idx}`]}
+                                    />
+                                </div>
+                            </div>
+                    )
+                } else {
+                    const image = `${name}.png`
+                    const tempImage = "question.png";
                     return (
                         <div key={idx} className="row">
                             <img
-                                src={image}
+                                src={imageExists(image) ? image : tempImage}
                                 alt={name}
                                 className="query_item_img"
                             />
@@ -73,17 +108,6 @@ export default function Questionnaire() {
                                 <label htmlFor={`checkbox-${name}-${idx}`}></label>
                                 <span></span>
                             </div>
-                        </div>
-                    )
-                } else if (displayMode === "custom") {
-                    return (
-                        <div key={idx} className="row">
-                            <img
-                                src={image}
-                                alt={name}
-                                className="query_item_img"
-                            />
-                            <div className="form_option" id={`option-${name}-${idx}`}>{name}</div>
                         </div>
                     )
                 }
@@ -134,26 +158,46 @@ export default function Questionnaire() {
         }
     };
 
+
+    const renderFormTop = () => (
+        <div className="form_top">
+            ankieta dotycząca wyposażenia wnętrza{' '}
+            <button className="btn_form_top" onClick={handleSendButtonClick}>
+                wyślij{' '}
+            </button>
+        </div>
+    );
+
+    const renderInputName = () => (
+        <input
+            className="input_name"
+            type="text"
+            placeholder="nazwa / imię"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+        />
+    );
+
+    const renderFooter = () => <Footer/>;
+
+    const renderLink = () => (
+        <Link to="/" className="centered_image">
+            <img src="home.png" alt="Home" className="home"/>
+        </Link>
+    );
+
     return (
-        <>
-            <div className="container">
-                <div className="form_top">ankieta dotycząca wyposażenia wnętrza <button
-                    className="btn_form_top" onClick={handleSendButtonClick}>wyślij </button></div>
-                <input
-                    className="input_name"
-                    type="text"
-                    placeholder="nazwa / imię"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                />
-                <RoomsTypesItems
-                    data={items}
-                    displayMode="standard"
-                    />
-                <Link to="/" className="centered_image"><img src="home.png" alt="Home" className="home"/></Link>
-                <Footer/>
-            </div>
-        </>
+
+        <div className="container">
+            {shouldRender && renderFormTop()}
+            {shouldRender && renderInputName()}
+            <RoomsTypesItems
+                data={items}
+                displayMode="standard"
+            />
+            {shouldRender && renderLink()}
+            {shouldRender && renderFooter()}
+        </div>
     )
 }
 

@@ -120,6 +120,12 @@
     background-size: 1.5rem;
   }
 }
+.query_answer{
+  width: 2rem;
+  height: 2rem;
+
+  color: red;
+}
 
 
 .form_checkbox input:checked + label + span {
@@ -146,4 +152,18 @@
   margin-bottom: 2rem;
   color: blue;
   width: 10rem;
+}
+
+.checked{
+  width: 3rem;
+  height: 2rem;
+
+  &:before{
+    content: "";
+    background: url("../assets/x.png") center/contain no-repeat;
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    margin-bottom: 1rem;
+  }
 }

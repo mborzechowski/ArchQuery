@@ -3,6 +3,7 @@ import {useEffect, useState, useRef} from "react";
 import supabase from "../services/supabase";
 import closeButton from "../assets/x.png"
 import {useAuth} from "../services/AuthContext.jsx";
+import Questionnaire from "./Questionnaire.jsx";
 
 export default function Admin() {
     const [openModal, setOpenModal] = useState(null);
@@ -44,8 +45,6 @@ export default function Admin() {
         getType()
         getQueryAnswers()
         getQuestionsAnswers()
-        console.log("query",queryAnswers)
-        console.log("question",questionsAnswers)
     }, [openModal, openModalAdd]);
 
 
@@ -131,7 +130,7 @@ export default function Admin() {
                 throw error;
             }
             data && setQueryAnswers(data)
-            console.log(data)
+
         } catch (error) {
             console.error("something went wrong", error)
         }
@@ -143,7 +142,7 @@ export default function Admin() {
                 throw error;
             }
             data && setQuestionsAnswers(data)
-            console.log(data)
+
         } catch (error) {
             console.error("something went wrong", error)
         }
@@ -248,10 +247,26 @@ export default function Admin() {
                                         <p className="answers_modal_titles">odpowiedzi z ankiet</p>
                                         {
                                             queryAnswers.map(answer => {
+
                                                 return (
                                                     <>
-                                                    <div className="single_answer"
+                                                    <div className="single_answer" onClick={() => handleAddButton(answer.id)}
                                                          key={answer.id}>{answer.user_name} / {(answer.created_at).slice(0, 10)}</div>
+                                                        {openModalAdd === answer.id && (
+                                                            <>
+                                                                <div className="add_item_modal questionnaire">
+                                                                    <div className="modal_buttons">
+                                                                        <button onClick={handleCloseAddModal} className="close_btn_add_modal">
+                                                                            <img
+                                                                                src={closeButton}
+                                                                                alt="X"
+                                                                                className="close_btn"/>
+                                                                        </button>
+                                                                    </div>
+                                                                    <Questionnaire isAdminPage={true} queryAnswers={answer}/>
+                                                                </div>
+                                                            </>
+                                                        )}
                                                     </>
                                                 )
                                             })
@@ -261,7 +276,6 @@ export default function Admin() {
                                         <p className="answers_modal_titles">odpowiedzi na pytania otwarte</p>
                                         {
                                             questionsAnswers.map(answer => {
-                                                console.log("answer", answer)
                                                 return (
                                                     <>
                                                     <div className="single_answer" onClick={() => handleAddButton(answer.id)}

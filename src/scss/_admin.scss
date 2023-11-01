@@ -58,7 +58,7 @@ body .container_admin{
   background: #fff;
   padding: 1.2rem;
   border-radius: 0.5rem;
-  box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.5);
+  box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
   width: 90vw;
   height: 90vh;
   z-index: 2;
@@ -112,6 +112,7 @@ body .container_admin{
   width: 2rem;
   height: 2rem;
   background: none;
+
 }
 
 .add_btn {
@@ -159,9 +160,28 @@ body .container_admin{
   background: white;
   left: 10%;
   top: 8rem;
-  border: 1px grey solid;
-  border-radius: 2rem;
+  border: 1px lightgrey solid;
+  border-radius: 0.6rem;
+  box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
+    &.questionnaire{
+    overflow-y: scroll;
+      height: 40rem;
+      border-radius: 0.6rem;
+      &::-webkit-scrollbar {
+        width: 0.8rem;
+      }
 
+      &::-webkit-scrollbar-thumb {
+        background-color: white;
+        border-radius: 0;
+        border: 1px solid lightgrey;
+        box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
+      }
+
+      &::-webkit-scrollbar-track {
+        background-color: blue;
+      }
+    }
 }
 
 .close_btn_add_modal {

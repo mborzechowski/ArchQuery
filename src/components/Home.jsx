@@ -50,15 +50,15 @@ export default function Home() {
                 <img src="projekt.png" alt="projekt"/>
                 <div className="main_page_menu"><span className="logo">AGATA TOFEL</span>
                     <nav className="main_page_menu_options">
-                        <Link to="/questionnaire" className="custom_link">
+                        <Link to="/ankieta" className="custom_link">
                             <div>ANKIETA</div>
                         </Link>
-                        <Link to="/questions" className="custom_link">
+                        <Link to="/pytania" className="custom_link">
                             <div>PYTANIA WSTĘPNE</div>
                         </Link>
                         <Link to="/cv" className="custom_link"><div>CV</div></Link>
 
-                        <Link to="/contact" className="custom_link">
+                        <Link to="/kontact" className="custom_link">
                             <div>KONTAKT</div>
                         </Link>
                     </nav>
