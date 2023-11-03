@@ -13,7 +13,7 @@
   height: 30rem;
   padding: 3rem;
   transform: translate(-50%, -50%);
-  background: #46a8fd;
+  background: blue;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -42,6 +42,9 @@
   border-bottom: 1px solid #fff;
   outline: none;
   background: transparent;
+  &:-webkit-autofill{
+    background-color: transparent !important;
+  }
 }
 
 .user_box_label {

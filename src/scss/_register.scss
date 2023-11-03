@@ -40,6 +40,9 @@
   border-bottom: 1px solid blue;
   outline: none;
   background: transparent;
+  &:-webkit-autofill{
+    background-color: transparent !important;
+  }
 }
 
 .user_box_label_register {

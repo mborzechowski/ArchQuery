@@ -173,7 +173,7 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
         <input
             className="input_name"
             type="text"
-            placeholder="nazwa / imię"
+            placeholder="projekt / imię"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
         />
