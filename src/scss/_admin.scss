@@ -1,39 +1,42 @@
 @import "variables";
-body .container_admin{
+
+body .container_admin {
   overflow: hidden;
 }
+
 .container_admin {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   margin: 5rem;
-  gap: 5rem;
+  gap: 4rem;
   font-family: $primary-font;
   box-sizing: border-box;
 
 }
 
 .admin_button {
-  width: 25rem;
-  height: 2rem;
+  width: 30rem;
+  height: 4rem;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5rem;
   cursor: pointer;
-  color: blue;
+  color: black;
   font-weight: 200;
-  border: 1px #e1e1e1 solid;
+  border: 1px #e1e1e1 hidden;
   background-color: white;
   box-shadow: 20px 10px 52px -14px rgba(66, 68, 90, 1);
   position: relative;
   transition: all 0.5s;
   z-index: 0;
+  margin-top: 2rem;
 
   &:hover {
-    width: 26rem;
-    height: 2.3rem;
+    width: 31rem;
+    height: 4.2rem;
   }
 
   &:last-of-type {
@@ -102,24 +105,24 @@ body .container_admin{
   flex-direction: column;
   justify-content: center;
   gap: 1rem;
-  position: absolute;
-  padding-left: 1rem ;
+  position: fixed;
+  padding-left: 1rem;
   padding-top: 0.5rem;
 
 }
 
 .close_btn {
   border: none;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background: none;
 
 }
 
 .add_btn {
   border: none;
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background: none;
   rotate: 45deg;
 }
@@ -135,7 +138,17 @@ body .container_admin{
   }
 }
 
-.save_btn{
+.delete_answer {
+  background: none;
+  border: none;
+  position: absolute;
+  top: 6rem;
+  fill: blue;
+  stroke: blue;
+
+}
+
+.save_btn {
   background: none;
   border: none;
 }
@@ -164,25 +177,59 @@ body .container_admin{
   border: 1px lightgrey solid;
   border-radius: 0.6rem;
   box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
-    &.questionnaire{
+
+  &.questionnaire {
     overflow-y: scroll;
-      height: 40rem;
-      border-radius: 0.6rem;
-      &::-webkit-scrollbar {
-        width: 0.8rem;
-      }
+    height: 40rem;
+    border-radius: 0.6rem;
+    padding: 2rem;
 
-      &::-webkit-scrollbar-thumb {
-        background-color: white;
-        border-radius: 0;
-        border: 1px solid lightgrey;
-        box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
-      }
-
-      &::-webkit-scrollbar-track {
-        background-color: blue;
-      }
+    &::-webkit-scrollbar {
+      width: 0.8rem;
     }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: white;
+      border-radius: 0;
+      border: 1px solid lightgrey;
+      box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: blue;
+    }
+  }
+}
+
+.add_item_modal_large {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  background: white;
+  left: 0;
+  top: 0;
+
+  &.questionnaire {
+    overflow-y: scroll;
+    border-radius: 0.6rem;
+    padding: 2rem;
+
+    &::-webkit-scrollbar {
+      width: 0.8rem;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: white;
+      border-radius: 0;
+      border: 1px solid lightgrey;
+      box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: blue;
+    }
+  }
 }
 
 .close_btn_add_modal {
@@ -193,7 +240,17 @@ body .container_admin{
   top: 1rem;
   left: 1rem;
 }
-.modal_adding_question{
+
+.resize_btn {
+  border: none;
+  width: 2.5rem;
+
+  background: none;
+  top: 0;
+  left: 0;
+}
+
+.modal_adding_question {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -201,7 +258,8 @@ body .container_admin{
   font-size: 1.5rem;
 
 }
-.adding_question{
+
+.adding_question {
   border: none;
   width: 100%;
   height: 100%;
@@ -209,31 +267,34 @@ body .container_admin{
 
 }
 
-.answers_modal_content{
+.answers_modal_content {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
-.answers_modal_titles{
+
+.answers_modal_titles {
   padding: 2rem;
 }
 
 .single_answer {
-  border: blue 1px solid;
+  border: blue 1px hidden;
   display: flex;
   justify-content: center;
   padding: 0.8rem;
   margin: 1rem;
   border-radius: 1rem;
-  width: 100%;
-  box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
+  width: 20rem;
+  box-shadow: 0 5px 50px -10px rgba(66, 68, 90, 1);
   cursor: pointer;
 }
 
 .answers_modal {
-  width: 20rem;
+  width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
+  flex-wrap: wrap;
 }
+

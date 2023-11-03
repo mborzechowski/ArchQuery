@@ -65,12 +65,12 @@
 .register_box_button {
   position: absolute;
   display: flex;
-  padding: 0.6rem 1.4rem;
-  width: 5em;
-  height: 5rem;
+  padding: 0.8rem;
+  width: 4em;
+  height: 4rem;
   border-radius: 50%;
-  left: 5rem;
-  bottom: 1rem;
+  left: 5.5rem;
+  bottom: 1.3rem;
   align-items: center;
   justify-content: center;
   background-color: rgb(255, 255, 255);
@@ -79,8 +79,8 @@
   transition: all 0.3s;
 
   &:hover {
-    width: 5.5rem;
-    height: 5.5rem;
+    width: 4.5rem;
+    height: 4.5rem;
   }
 }
 
@@ -88,8 +88,8 @@
     position: absolute;
     top: 15rem;
     left: -2rem;
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     background-color: white;
     display: flex;
@@ -98,8 +98,8 @@
     box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
     transition: all 0.3s;
     &:hover{
-      width: 5.5rem;
-      height: 5.5rem;
+      width: 4.5rem;
+      height: 4.5rem;
     }
 }
 

@@ -3,7 +3,7 @@ import {useEffect, useState, useRef} from "react";
 import supabase from "../services/supabase";
 import closeButton from "../assets/x.png"
 import Questionnaire from "./Questionnaire.jsx";
-import {deleteIcon, saveIcon} from "../services/icons.jsx";
+import {deleteIcon, saveIcon, resizeUpIcon, resizeDownIcon} from "../services/icons.jsx";
 import {useAuth} from '../services/AuthContext.jsx';
 export default function Admin() {
     const [openModal, setOpenModal] = useState(null);
@@ -22,8 +22,9 @@ export default function Admin() {
     const [addQuestion, setAddQuestion] = useState('');
     const [queryAnswers, setQueryAnswers] = useState([]);
     const [questionsAnswers, setQuestionsAnswers] = useState([]);
-    const {user, admin} = useAuth();
+    const {user, admin, login} = useAuth();
     const navigation = useNavigate();
+    const [resize, setResize] = useState(false)
 
     useEffect(() => {
         getItems();
@@ -34,6 +35,22 @@ export default function Admin() {
         getQuestionsAnswers()
     }, [openModal, openModalAdd]);
 
+    useEffect(() => {
+        const checkUserSession = async () => {
+            try {
+                // pobieranie sesji
+                const { data, error } = await supabase.auth.getSession();
+                console.log("data", data)
+                if (!error && data && data.session && data.session.user && data.session.user.id) {
+                    login(data.session.user.id);
+                }
+            } catch (error) {
+                console.error('Error checking user session:', error);
+            }
+        };
+
+        checkUserSession();
+    }, [login]);
 
     // Helper functions
     const handleDelete = async (itemId, query) => {
@@ -46,6 +63,7 @@ export default function Admin() {
             if (!error) {
                 setItems(prevItems => prevItems.filter(item => item.id !== itemId));
                 setQuestions(prevItems => prevItems.filter(item => item.id !== itemId));
+                setQueryAnswers(prevItems => prevItems.filter(item => item.id !== itemId));
             } else {
                 console.error('Something went wrong while deleting item', error);
             }
@@ -146,6 +164,7 @@ export default function Admin() {
 
     const handleCloseAddModal = () => {
         setOpenModalAdd(null);
+        setResize(true)
     };
     const handleAddButton = (modalId) => {
         setOpenModalAdd(modalId);
@@ -256,6 +275,10 @@ export default function Admin() {
         }
     }
 
+    const handleChangeSize = () =>{
+        setResize(!resize)
+    }
+
 
     // Rendering functions
 
@@ -264,10 +287,12 @@ export default function Admin() {
             <>
                 <div className="modal_overlay">
                     <div className="modal_content">
+                        <div className="modal_buttons">
                         <button onClick={handleCloseModal} className="close_btn"><img src={closeButton}
                                                                                       alt="X"
                                                                                       className="close_btn"/>
                         </button>
+                        </div>
 
                         <div className="answers_modal_content">
                             <div className="answers_modal">
@@ -282,7 +307,7 @@ export default function Admin() {
                                                      key={answer.id}>{answer.user_name} / {(answer.created_at).slice(0, 10)}</div>
                                                 {openModalAdd === answer.id && (
                                                     <>
-                                                        <div className="add_item_modal questionnaire">
+                                                        <div className={resize ? "add_item_modal questionnaire" : "add_item_modal_large questionnaire"}>
                                                             <div className="modal_buttons">
                                                                 <button onClick={handleCloseAddModal}
                                                                         className="close_btn_add_modal">
@@ -291,8 +316,13 @@ export default function Admin() {
                                                                         alt="X"
                                                                         className="close_btn"/>
                                                                 </button>
-                                                                <div
-                                                                    className="form_top">{answer.user_name}</div>
+                                                                <button onClick={handleChangeSize}
+                                                                        className="resize_btn">
+                                                                    {resize ? resizeUpIcon : resizeDownIcon}
+                                                                </button>
+                                                                <button className="delete_answer"
+                                                                        onClick={() => handleDelete(answer.id, 'answers_questionnaire')}>{deleteIcon}</button>
+                                                                <div className="form_top">{answer.user_name}</div>
                                                             </div>
                                                             <Questionnaire isAdminPage={true}
                                                                            queryAnswers={answer}/>
@@ -557,7 +587,9 @@ export default function Admin() {
         </>
         )}
 
-    if (user.id !== admin) {
+    if (user && user.id !== admin) {
+        return navigation('/')
+    } else if (!user) {
         return navigation('/')
     } else {
         return (
@@ -570,7 +602,7 @@ export default function Admin() {
 
                     <div className="admin_button" onClick={() => handleButtonClick("question")}>PYTANIA OTWARTE</div>
                     {openModal === "question" && renderQuestionList()}
-                    <Link to="/" className="centered_image"><img src="home.png" alt="Home" className="home"/></Link>
+                    <Link to="/"><img src="home.png" alt="Home"/></Link>
                 </div>
             </>
         )

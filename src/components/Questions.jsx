@@ -65,7 +65,7 @@ export default function Questions() {
             setUserName('');
             setUserAnswers({});
         } catch (error) {
-            console.error('Coś poszło nie tak:', error);
+            console.error('Something went wrong', error);
         }
     };
 
@@ -86,7 +86,9 @@ export default function Questions() {
                     {
                         questions.map((question, index) => {
                             return (
-                                <li className="single_question" key={index}>
+                                <li key={index}>
+                                    <div className="single_question">
+                                    <p className="question_value">{question.question} :</p>
                                     <input
                                         className="input_questions"
                                         type="text"
@@ -94,7 +96,8 @@ export default function Questions() {
                                         value={userAnswers[index]}
                                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                                     />
-                                    <label className="label_questions">{question.question}</label>
+                                    {/*<label className="label_questions"></label>*/}
+                                    </div>
                                 </li>
                             )
 

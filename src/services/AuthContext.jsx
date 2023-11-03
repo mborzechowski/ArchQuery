@@ -12,13 +12,8 @@ export const AuthProvider = ({ children }) => {
     };
 
     const logout = async () => {
-        // Wyloguj sesję na stronie serwera (Supabase)
         await supabase.auth.signOut();
-
-        // Wyczyść token JWT z lokalnego składowania
         localStorage.removeItem('jwtToken');
-
-        // Zaktualizuj stan autentykacji na klienta
         setUser(null);
     };
 

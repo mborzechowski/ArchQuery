@@ -55,6 +55,7 @@
   position: absolute;
   top: 1rem;
   right: 3rem;
+
   .tooltip {
     visibility: hidden;
     color: blue;
@@ -75,13 +76,31 @@
 
 .menu_button{
   position: absolute;
-  top: 1rem;
-  left: 3rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  top: 0.9rem;
+  right: 6rem;
+  width: 2.6rem;
+  height: 2.6rem;
   &:hover path {
-    stroke: blue;
     fill: blue;
+  }
+  &:hover circle {
+    fill: blue;
+  }
+  .tooltip {
+    visibility: hidden;
+    color: blue;
+    padding-top: 0.5rem;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: -0.4rem;
+    transition: opacity 0.3s, visibility 0.3s, top 0.3s;
+  }
+  &:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    top: 3rem;
+    left: 0
   }
 }
 

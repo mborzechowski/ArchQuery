@@ -35,22 +35,29 @@
 .single_question {
   position: relative;
   width: 60rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.question_value{
+  width: 50rem;
 }
 
 .input_questions {
-  width: 25%;
-  padding: 4rem 0 0.5rem ;
-  color: #0000ff;
-  margin-bottom: 2rem;
+  width: 18%;
+  font-size: 0.8rem;
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 2px dotted black;
   background: transparent;
   transition: all 0.8s;
+  text-align: end;
+  height: 1rem;
+  align-self: end;
 
   &:focus {
-    width: 75%;
+    width: 23%;
     color: blue;
-    text-indent: 0
+    //text-indent: 0
   }
 }
 
