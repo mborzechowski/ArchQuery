@@ -1,5 +1,5 @@
-import contact_foto from '../assets/contact.png'
-import logo from '../assets/projekt-kontakt.png'
+import contact_foto from 'src/assets/contact.png'
+import logo from 'src/assets/projekt-kontakt.png'
 import insta from '../assets/insta.webp'
 import {Link} from "react-router-dom";
 
