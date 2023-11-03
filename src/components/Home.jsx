@@ -4,8 +4,8 @@ import {useAuth} from '../services/AuthContext.jsx';
 import {useEffect} from "react";
 import supabase from "../services/supabase";
 export default function Home() {
-    const {user, logout, login} = useAuth();
-    const admin = "c3ec8e43-b2cd-48b2-b1a4-93e02d188ef2"
+    const {user, logout, login, admin} = useAuth();
+
 
     useEffect(() => {
         const checkUserSession = async () => {
@@ -24,7 +24,7 @@ export default function Home() {
         checkUserSession();
     }, [login]);
     const renderLoginLink = () => {
-        if (user && user === admin) {
+        if (user && user.id === admin) {
 
             return (
                 <>

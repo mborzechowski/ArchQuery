@@ -14,7 +14,6 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
 
     useEffect(() => {
         getItems();
-
     }, []);
 
 
@@ -55,15 +54,13 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
         const generateItemDivs = (names) => {
 
             return names.map((name, idx) => {
-                function imageExists(image) {
-                    try {
+                async function imageExists(image) {
+                    return new Promise((resolve, reject) => {
                         const img = new Image();
                         img.src = image;
-                        img.onerror = () => false;
-                        return img.complete;
-                    } catch (error) {
-                        return false;
-                    }
+                        img.onload = () => resolve(true);
+                        img.onerror = () => resolve(false);
+                    });
                 }
 
                 if (queryAnswers) {

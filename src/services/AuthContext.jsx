@@ -3,7 +3,7 @@ import supabase from "../services/supabase.js";
 
 export const AuthContext = createContext();
 export const AppContext = createContext();
-
+export const admin = "c3ec8e43-b2cd-48b2-b1a4-93e02d188ef2"
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
@@ -44,7 +44,7 @@ export const AppProvider = ({ children }) => {
     };
 
     return (
-        <AppContext.Provider value={{ items, setItems,  getItems }}>
+        <AppContext.Provider value={{ items, setItems,  getItems, admin }}>
             {children}
         </AppContext.Provider>
     );
