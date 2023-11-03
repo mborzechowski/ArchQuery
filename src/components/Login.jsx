@@ -62,14 +62,16 @@ export default function Login() {
                         <input className="user_box_input" type="password" required />
                             <label className="user_box_label">hasło</label>
                     </div>
-                    <button type="submit" className="login_box_button" href="#">
+                    <button type="submit" className="login_box_button">
                         {loginIcon}
+                        <div className="user_box_subtitle_login">login</div>
                     </button>
                         <Link to="/" className="home_button">
                             <img src="home.png" alt="Home" className="home"/>
                         </Link>
                     <Link to="/register" className="flip_icon">
                         {loginRegisterIcon}
+                        <div className="user_box_subtitle_register">zarejestruj</div>
                     </Link>
                 </form>
             </div>

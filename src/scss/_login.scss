@@ -1,5 +1,9 @@
 @import "variables";
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
 .login_page {
   font-family: $primary-font;
 
@@ -42,7 +46,8 @@
   border-bottom: 1px solid #fff;
   outline: none;
   background: transparent;
-  &:-webkit-autofill{
+
+  &:-webkit-autofill {
     background-color: transparent !important;
   }
 }
@@ -52,15 +57,15 @@
   top: 0;
   left: 0;
   padding: 0.8rem 0;
-  font-size:0.8rem;
+  font-size: 0.8rem;
   color: #fff;
   pointer-events: none;
   transition: 0.5s;
 
 }
 
-.login_box .user_box input:focus~label,
-.login_box .user_box input:valid~label {
+.login_box .user_box input:focus ~ label,
+.login_box .user_box input:valid ~ label {
   top: -1.3rem;
   left: 0;
   color: #fdfdfd;
@@ -85,13 +90,14 @@
   border: none;
   box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
   transition: all 0.3s;
-  &:hover{
+
+  &:hover {
     width: 4.5rem;
     height: 4.5rem;
   }
 }
 
-.home_button{
+.home_button {
   position: absolute;
   top: 7rem;
   left: 31rem;
@@ -104,10 +110,21 @@
   align-items: center;
   box-shadow: 20px 15px 42px -16px rgba(66, 68, 90, 1);
   transition: all 0.3s;
-  &:hover{
+
+  &:hover {
     width: 4.5rem;
     height: 4.5rem;
   }
 }
 
+.user_box_subtitle_login {
+  position: absolute;
+  left: -3rem;
+  bottom: 0;
+}
 
+.user_box_subtitle_register{
+  position: absolute;
+  left: -5rem;
+  top: 0;
+}

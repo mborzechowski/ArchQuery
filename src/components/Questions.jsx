@@ -10,7 +10,7 @@ export default function Questions() {
 
     useEffect(() => {
         getQuestions();
-        console.log("questions", questions)
+
     }, []);
     const getQuestions = async () => {
 
@@ -25,7 +25,7 @@ export default function Questions() {
                 question: item.question,
             }));
 
-            console.log("transform", transformedData);
+
             data && setQuestions(transformedData);
         } catch (error) {
             console.error('Something went wrong', error);
@@ -88,15 +88,14 @@ export default function Questions() {
                             return (
                                 <li key={index}>
                                     <div className="single_question">
-                                    <p className="question_value">{question.question} :</p>
-                                    <input
+                                    <p className="question_value">{question.question}</p>
+                                    <textarea
                                         className="input_questions"
-                                        type="text"
+
                                         placeholder=" "
                                         value={userAnswers[index]}
                                         onChange={(e) => handleAnswerChange(question.id, e.target.value)}
                                     />
-                                    {/*<label className="label_questions"></label>*/}
                                     </div>
                                 </li>
                             )
