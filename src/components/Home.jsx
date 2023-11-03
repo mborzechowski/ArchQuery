@@ -1,13 +1,30 @@
 import {Link} from 'react-router-dom'
 import "../scss/_home.scss";
 import {useAuth} from '../services/AuthContext.jsx';
-
+import {useEffect} from "react";
+import supabase from "../services/supabase";
 export default function Home() {
-    const {user, logout} = useAuth();
+    const {user, logout, login} = useAuth();
     const admin = "c3ec8e43-b2cd-48b2-b1a4-93e02d188ef2"
 
+    useEffect(() => {
+        const checkUserSession = async () => {
+            try {
+                // pobieranie sesji
+                const { data, error } = await supabase.auth.getSession();
+                console.log("data", data)
+                if (!error && data) {
+                    login(data.session.user.id);
+                }
+            } catch (error) {
+                console.error('Error checking user session:', error);
+            }
+        };
+
+        checkUserSession();
+    }, [login]);
     const renderLoginLink = () => {
-        if (user && user.id === admin) {
+        if (user && user === admin) {
 
             return (
                 <>
@@ -36,7 +53,7 @@ export default function Home() {
                 </>
             );
 
-        } else if (user && user.id !== admin) {
+        } else if (user && user !== admin) {
             return (
                 <Link to="/" onClick={logout} className="custom_link">
                     <div className="icon-container">

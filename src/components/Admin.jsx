@@ -185,20 +185,48 @@ export default function Admin() {
                 room: roomToSave,
             };
 
-            const {data, error} = await supabase
+            const fileInput = document.getElementById('file-input');
+            console.log("input", fileInput)
+            if (fileInput) {
+                const iconFile = fileInput.files[0];
+                const fileName = name
+                console.log("icon",iconFile)
+                console.log("name", fileName)
+
+                if (iconFile) {
+                    const { data: uploadData, error: uploadError } = await supabase
+                        .storage.from('avatars')
+                        .upload(`icons/${fileName}.png`, iconFile);
+
+
+                    if (uploadError) {
+                        throw uploadError;
+                    }
+
+                    console.log('Icon uploaded successfully:', uploadData);
+
+                } else {
+                    console.error('Nie wybrano pliku.');
+                }
+            } else {
+                console.error('Element input z identyfikatorem "file-input" nie istnieje.');
+            }
+
+
+            const { data, error } = await supabase
                 .from('Query Items')
                 .insert([dataToSave])
-                .select()
+                .select();
 
             if (error) {
                 throw error;
             }
 
-            setOpenModalAdd(null)
+            setOpenModalAdd(null);
         } catch (error) {
             console.error('Coś poszło nie tak:', error);
         }
-    }
+    };
 
     const handleSaveQuestionButton = async () => {
         try {
@@ -237,6 +265,7 @@ export default function Admin() {
             return false;
         }
     }
+
 
     return (
         <>
@@ -376,7 +405,7 @@ export default function Admin() {
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td><input type="text" placeholder="..." value={name}
+                                                    <td><input type="text" placeholder="..." defaultValue={name}
                                                                onChange={(e) => setName(e.target.value)}/></td>
                                                     <td><select name="pokój" id="room" value={selectedOption}
                                                                 onChange={(e) => setSelectedOption(e.target.value)}>
@@ -415,7 +444,7 @@ export default function Admin() {
                                                         </>
                                                     )}
                                                     </td>
-                                                    <td><input type="file"/></td>
+                                                    <td><input type="file" id="file-input"/></td>
                                                 </tr>
                                                 </tbody>
                                             </table>

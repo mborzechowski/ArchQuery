@@ -1,11 +1,27 @@
 import supabase from "../services/supabase";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../services/AuthContext.jsx';
-
+import { useEffect } from 'react';
 
 export default function Login() {
     const navigation = useNavigate();
     const {login } = useAuth();
+
+    useEffect(() => {
+        const checkUserSession = async () => {
+            try {
+                // Pobieranie sessi i odświeżanie
+                const { data, error } = await supabase.auth.getSession();
+                if (!error && data) {
+                    login(data.session.user.id);
+                }
+            } catch (error) {
+                console.error('Error checking user session:', error);
+            }
+        };
+
+        checkUserSession();
+    }, [login]);
     async function onSignIn(e) {
         e.preventDefault();
 
@@ -20,7 +36,10 @@ export default function Login() {
             const { data: { user } } = await supabase.auth.getUser()
             console.log('user logged successfully');
             console.log(data);
-            console.log("Login:",user)
+            console.log("Login:",user);
+
+            localStorage.setItem('jwtToken', data.session.access_token);
+
             login(data.user);
             navigation('/');
             return;
