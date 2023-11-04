@@ -10,12 +10,22 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
     const [selectedCheckboxes, setSelectedCheckboxes] = useState('');
     const {items, getItems} = useAppContext();
     const shouldRender = !isAdminPage
+    const sendAlert = document.getElementById("query_send")
 
 
     useEffect(() => {
         getItems();
+
     }, []);
 
+    function replacePolishChars(text) {
+        const polishChars = {
+            'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z',
+            'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z'
+        };
+
+        return text.replace(/[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g, char => polishChars[char] || char);
+    }
 
     const RoomsTypesItems = function ({data}) {
         const groupedByRoom = data.reduce((acc, current) => {
@@ -54,25 +64,19 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
         const generateItemDivs = (names) => {
 
             return names.map((name, idx) => {
-                async function imageExists(image) {
-                    return new Promise((resolve, reject) => {
-                        const img = new Image();
-                        img.src = image;
-                        img.onload = () => resolve(true);
-                        img.onerror = () => resolve(false);
-                    });
-                }
 
                 if (queryAnswers) {
                     const itemsToRender = queryAnswers.items;
                     const keys = itemsToRender.map(([key]) => `option-${key}`)
-                    const image = `${name}.png`
                     const tempImage = "question.png";
+                    const nameWithoutPolish = replacePolishChars(name)
+                    const iconSupabase = `https://fyqfkfprxpzhsyslsnff.supabase.co/storage/v1/object/public/avatars/icons/${nameWithoutPolish}.png`
+
 
                     return (
                         <div key={idx} className="row">
                             <img
-                                src={imageExists(image) ? image : tempImage}
+                                src={iconSupabase || tempImage}
                                 alt={name}
                                 className={`query_item_img ${idx === names.length - 1 ? 'last_checkbox' : ''}`}
                             />
@@ -88,12 +92,14 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
                         </div>
                     )
                 } else {
-                    const image = `${name}.png`
                     const tempImage = "question.png";
+                    const nameWithoutPolish = replacePolishChars(name)
+                    const iconSupabase = `https://fyqfkfprxpzhsyslsnff.supabase.co/storage/v1/object/public/avatars/icons/${nameWithoutPolish}.png`
+
                     return (
                         <div key={idx} className="row">
                             <img
-                                src={imageExists(image) ? image : tempImage}
+                                src={iconSupabase || tempImage}
                                 alt={name}
                                 className={`query_item_img ${idx === names.length - 1 ? 'last_checkbox' : ''}`}
                             />
@@ -133,11 +139,11 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
                 throw error;
             }
 
-            console.log('Dane zostały zapisane:', data);
             setUserName('');
             setSelectedCheckboxes({});
+            sendAlert.classList.remove("hidden")
         } catch (error) {
-            console.error('Coś poszło nie tak:', error);
+            console.error('Something went wrong:', error);
         }
     };
 
@@ -157,6 +163,10 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
             });
         }
     };
+
+    const handleAlertConfirm = () => {
+        sendAlert.classList.add("hidden")
+    }
 
 
     const renderFormTop = () => (
@@ -187,10 +197,10 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
         </Link>
     );
 
+
     return (
 
         <div className="container">
-            {/*{!shouldRender && (<div className="form_top">{queryAnswers.user_name}</div>)}*/}
             {shouldRender && renderFormTop()}
             {shouldRender && renderInputName()}
             <RoomsTypesItems
@@ -199,6 +209,7 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
             />
             {shouldRender && renderLink()}
             {shouldRender && renderFooter()}
+            <div className="query_send hidden" id="query_send">odpowiedzi zapisane! <button className="query_send_ok" onClick={handleAlertConfirm}>OK</button></div>
         </div>
     )
 }

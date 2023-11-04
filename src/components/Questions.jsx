@@ -7,6 +7,7 @@ export default function Questions() {
     const [questions, setQuestions] = useState([])
     const [userName, setUserName] = useState('');
     const [userAnswers, setUserAnswers] = useState({});
+    const sendAlert = document.getElementById("query_send")
 
     useEffect(() => {
         getQuestions();
@@ -64,10 +65,15 @@ export default function Questions() {
 
             setUserName('');
             setUserAnswers({});
+            sendAlert.classList.remove("hidden")
         } catch (error) {
             console.error('Something went wrong', error);
         }
     };
+
+    const handleAlertConfirm = () => {
+        sendAlert.classList.add("hidden")
+    }
 
     return (
         <>
@@ -106,6 +112,7 @@ export default function Questions() {
                 <Link to="/" className="centered_image">
                     <img src="home.png" alt="Home" className="home"/>
                 </Link>
+                <div className="query_send hidden" id="query_send">odpowiedzi zapisane! <button className="query_send_ok" onClick={handleAlertConfirm}>OK</button></div>
                 <Footer/>
             </div>
         </>

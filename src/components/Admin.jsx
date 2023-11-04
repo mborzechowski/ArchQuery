@@ -42,7 +42,6 @@ export default function Admin() {
             try {
                 // pobieranie sesji
                 const {data, error} = await supabase.auth.getSession();
-                console.log("data", data)
                 if (!error && data && data.session && data.session.user && data.session.user.id) {
                     login(data.session.user.id);
                 }
@@ -55,6 +54,15 @@ export default function Admin() {
     }, [login]);
 
     // Helper functions
+
+    function replacePolishChars(text) {
+        const polishChars = {
+            'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z',
+            'Ą': 'A', 'Ć': 'C', 'Ę': 'E', 'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z'
+        };
+
+        return text.replace(/[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g, char => polishChars[char] || char);
+    }
     const handleDelete = async (itemId, query) => {
         try {
             const {error} = await supabase
@@ -198,12 +206,10 @@ export default function Admin() {
             };
 
             const fileInput = document.getElementById('file-input');
-            console.log("input", fileInput)
+
             if (fileInput) {
                 const iconFile = fileInput.files[0];
                 const fileName = name
-                console.log("icon", iconFile)
-                console.log("name", fileName)
 
                 if (iconFile) {
                     const {data: uploadData, error: uploadError} = await supabase
@@ -282,7 +288,7 @@ export default function Admin() {
         setResize(!resize)
     }
 
-    const handleFileChange = (e) => {
+    const handleFileChange = async (e) => {
         const file = e.target.files[0];
         setSelectedFile(file);
     };
@@ -303,10 +309,8 @@ export default function Admin() {
                         <div className="answers_modal_content">
                             <p className="answers_modal_titles">odpowiedzi z ankiet</p>
                             <div className="answers_modal">
-
                                 {
                                     queryAnswers.map(answer => {
-
                                         return (
                                             <>
                                                 <div className="single_answer"
@@ -526,15 +530,16 @@ export default function Admin() {
                             <tbody>
                             {
                                 items.map(item => {
-                                    const image = `${item.name}.png`;
                                     const tempImage = "question.png";
+                                    const nameWithoutPolish = replacePolishChars(item.name)
+                                    const iconSupabase = `https://fyqfkfprxpzhsyslsnff.supabase.co/storage/v1/object/public/avatars/icons/${nameWithoutPolish}.png`
 
                                     return (
                                         <tr key={item.created_at}>
                                             <td>{item.name}</td>
                                             <td> {item.room}</td>
                                             <td> {item.type}</td>
-                                            <td><img src={imageExists(image) ? image : tempImage}
+                                            <td><img src={iconSupabase || tempImage}
                                                      alt={item.name}/></td>
                                             <td>
                                                 <button className="delete_btn"
