@@ -94,14 +94,14 @@ export default function Questions() {
                             return (
                                 <li key={index}>
                                     <div className="single_question">
-                                    <p className="question_value">{question.question}</p>
-                                    <textarea
-                                        className="input_questions"
+                                        <p className="question_value">{question.question}</p>
+                                        <textarea
+                                            className="input_questions"
 
-                                        placeholder=" "
-                                        value={userAnswers[index]}
-                                        onChange={(e) => handleAnswerChange(question.id, e.target.value)}
-                                    />
+                                            placeholder=" "
+                                            value={userAnswers[question.id] || ''}
+                                            onChange={(e) => handleAnswerChange(question.id, e.target.value)}
+                                        />
                                     </div>
                                 </li>
                             )
@@ -118,4 +118,3 @@ export default function Questions() {
         </>
     )
 }
-
