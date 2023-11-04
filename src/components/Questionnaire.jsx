@@ -77,6 +77,9 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
                         <div key={idx} className="row">
                             <img
                                 src={iconSupabase || tempImage}
+                                onError={(e) => {
+                                    e.target.src = tempImage;
+                                }}
                                 alt={name}
                                 className={`query_item_img ${idx === names.length - 1 ? 'last_checkbox' : ''}`}
                             />
@@ -100,6 +103,9 @@ export default function Questionnaire({isAdminPage, queryAnswers}) {
                         <div key={idx} className="row">
                             <img
                                 src={iconSupabase || tempImage}
+                                onError={(e) => {
+                                    e.target.src = tempImage;
+                                }}
                                 alt={name}
                                 className={`query_item_img ${idx === names.length - 1 ? 'last_checkbox' : ''}`}
                             />

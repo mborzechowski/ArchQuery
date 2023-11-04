@@ -10,15 +10,15 @@ body .container_admin {
   justify-content: center;
   flex-direction: row;
   margin: 5rem;
-  gap: 2rem;
+  gap: 1rem;
   font-family: $primary-font;
   box-sizing: border-box;
 
 }
 
 .admin_button {
-  width: 20rem;
-  height: 20rem;
+  width: 16rem;
+  height: 16rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -353,5 +353,38 @@ input[type="file"] {
   margin-right: 0.5rem;
   :hover{
     color: black;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .container_admin{
+    flex-wrap: wrap;
+  }
+  .admin_button{
+    width: 10rem;
+    height: 10rem;
+    text-align: center;
+  }
+
+  .modal_buttons{
+    flex-direction: row;
+    position: relative;
+    justify-content: start;
+  }
+  .close_btn_add_modal{
+    top:0;
+    left: 0;
+  }
+ .add_item_modal {
+   width: auto;
+ }
+  .new_item{
+    width: auto;
+    display: flex;
+    flex-direction: column;
+
+  }
+  .new_item_hidden{
+    display: none;
   }
 }

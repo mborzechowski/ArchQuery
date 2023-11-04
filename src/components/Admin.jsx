@@ -273,16 +273,6 @@ export default function Admin() {
         }
     }
 
-    function imageExists(image) {
-        try {
-            const img = new Image();
-            img.src = image;
-            img.onerror = () => false;
-            return img.complete;
-        } catch (error) {
-            return false;
-        }
-    }
 
     const handleChangeSize = () => {
         setResize(!resize)
@@ -443,14 +433,13 @@ export default function Admin() {
                                         <button onClick={handleSaveItemButton}
                                                 className="save_btn">{saveIcon}</button>
                                     </div>
-                                    <table className="items_table">
-                                        <thead>
+                                    <table className="items_table new_item">
+                                        <thead className="new_item_hidden">
                                         <tr>
                                             <th>nazwa</th>
                                             <th>pokój</th>
                                             <th>typ</th>
                                             <th>ikona</th>
-
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -540,6 +529,9 @@ export default function Admin() {
                                             <td> {item.room}</td>
                                             <td> {item.type}</td>
                                             <td><img src={iconSupabase || tempImage}
+                                                     onError={(e) => {
+                                                         e.target.src = tempImage;
+                                                     }}
                                                      alt={item.name}/></td>
                                             <td>
                                                 <button className="delete_btn"

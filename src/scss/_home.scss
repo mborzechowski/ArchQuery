@@ -104,6 +104,8 @@
   }
 }
 
+
+
 .logo-main::before {
   content: "";
   position: absolute;
@@ -129,5 +131,17 @@
   }
   100% {
     opacity: 0;
+  }
+}
+
+@media screen and (max-width: 1900px){
+  .logo-main::before{
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1980px){
+  .logo-main::before{
+    display: none;
   }
 }

@@ -73,7 +73,7 @@ export default function Home() {
         <>
             <div className="main_page">
                 {renderLoginLink()}
-                <div className="logo-main"><img src="projekt.png" alt="projekt"/></div>
+                <div className="logo-main"><img src="projekt.png" alt="projekt" /></div>
                 <div className="main_page_menu"><span className="logo">AGATA TOFEL</span>
                     <nav className="main_page_menu_options">
                         <Link to="/ankieta" className="custom_link">
